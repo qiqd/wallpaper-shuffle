@@ -94,5 +94,17 @@ namespace WallpaperShuffle.Properties {
                 this["IntervalMinutes"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AutoCleanup {
+            get {
+                return ((bool)(this["AutoCleanup"]));
+            }
+            set {
+                this["AutoCleanup"] = value;
+            }
+        }
     }
 }

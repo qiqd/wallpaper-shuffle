@@ -18,6 +18,7 @@ namespace WallpaperShuffle
             this.selfStaring = selfStaring;
             this.slidehowManager = new SlidehowManager();
             this.registerHandle = new RegisterHandle();
+            DLLManager.WindowRoundedCornersHandle(this.WallpaperShuffleContextMenuStrip.Handle);
         }
 
         private void MainFormLoad(object sender, EventArgs e)
@@ -94,6 +95,7 @@ namespace WallpaperShuffle
             DialogResult result = folderBrowserDialog.ShowDialog();
             if (result == DialogResult.Cancel) return;
             Properties.Settings.Default.WallpaperSaveDirPath = folderBrowserDialog.SelectedPath;
+            Properties.Settings.Default.Save();
             WallpaperResource.WallpaperSaveDirPath = folderBrowserDialog.SelectedPath;
         }
 
@@ -110,6 +112,8 @@ namespace WallpaperShuffle
         private void EnableAutoBoot(object sender, EventArgs e)
         {
             CheckBox checkBox = sender as CheckBox;
+            Properties.Settings.Default.AutoBoot = checkBox.Checked;
+            Properties.Settings.Default.Save();
             if (checkBox.Checked)
             {
                 this.registerHandle.SetStartup();
@@ -119,7 +123,26 @@ namespace WallpaperShuffle
                 this.registerHandle.RemoveStartup();
             }
         }
-
+        private void EnableAutoCleanup(object sender, EventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            Properties.Settings.Default.AutoCleanup = checkBox.Checked;
+            Properties.Settings.Default.Save();
+            if (!checkBox.Checked)
+            {
+                DialogResult dialogResult = MessageBox.Show("关闭自动清理功能后，程序将不再定期删除旧壁纸文件。是否关闭自动清理功能？。", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                if (dialogResult == DialogResult.Cancel)
+                {
+                    checkBox.Checked = true;
+                    return;
+                }
+                this.slidehowManager.PauseCleanupTrigger();
+            }
+            else
+            {
+                this.slidehowManager.ResumeCleanupTrigger();
+            }
+        }
         private void UsageGuideClick(object sender, EventArgs e)
         {
             try
@@ -129,7 +152,7 @@ namespace WallpaperShuffle
             }
             catch (Exception)
             {
-                MessageBox.Show("打开使用指导失败。");
+                MessageBox.Show("打开使用指导文件失败。");
             }
         }
 
@@ -138,6 +161,7 @@ namespace WallpaperShuffle
             ComboBox comboBox = sender as ComboBox;
             Properties.Settings.Default.currentIndex = comboBox.SelectedIndex;
             Properties.Settings.Default.ResourceTitle = WallpaperResource.WallpaperSourceItems[comboBox.SelectedIndex].title;
+            Properties.Settings.Default.Save();
         }
 
         private void LanguageShowChange(object sender, EventArgs e)
@@ -165,24 +189,7 @@ namespace WallpaperShuffle
             this.Hide();
         }
 
-        private void EnableAutoCleanup(object sender, EventArgs e)
-        {
-            CheckBox checkBox = sender as CheckBox;
-            if (!checkBox.Checked)
-            {
-                DialogResult dialogResult = MessageBox.Show("关闭自动清理功能后，程序将不再定期删除旧壁纸文件。是否关闭自动清理功能？。", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-                if (dialogResult == DialogResult.Cancel)
-                {
-                    checkBox.Checked = true;
-                    return;
-                }
-                this.slidehowManager.PauseCleanupTrigger();
-            }
-            else
-            {
-                this.slidehowManager.ResumeCleanupTrigger();
-            }
-        }
+       
 
         private void OnIntervalCalueChange(object sender, EventArgs e)
         {

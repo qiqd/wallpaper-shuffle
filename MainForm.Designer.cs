@@ -199,8 +199,7 @@
             // 
             this.EnableAutoCleanupCheckBox.AutoSize = true;
             this.EnableAutoCleanupCheckBox.CheckAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.EnableAutoCleanupCheckBox.Checked = true;
-            this.EnableAutoCleanupCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.EnableAutoCleanupCheckBox.Checked = Properties.Settings.Default.AutoCleanup;
             this.EnableAutoCleanupCheckBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.EnableAutoCleanupCheckBox.Location = new System.Drawing.Point(214, 107);
             this.EnableAutoCleanupCheckBox.Name = "EnableAutoCleanupCheckBox";
@@ -221,6 +220,8 @@
             this.AutoBootCheckBox.TabIndex = 0;
             this.AutoBootCheckBox.Text = "开机自启动";
             this.AutoBootCheckBox.UseVisualStyleBackColor = true;
+            this.AutoBootCheckBox.Checked= Properties.Settings.Default.AutoBoot;
+            
             this.AutoBootCheckBox.CheckedChanged += new System.EventHandler(this.EnableAutoBoot);
             // 
             // About

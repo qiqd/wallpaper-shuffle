@@ -20,7 +20,7 @@ namespace WallpaperShuffle
                 .Where(f => imageExtensions.Contains(Path.GetExtension(f)))
                 .ToArray();
 
-            if (imageFiles.Length < 3) return Task.CompletedTask;
+            if (imageFiles.Length < 30) return Task.CompletedTask;
             // 按时间戳升序排序
             string[] sortedFiles = imageFiles
                 .Select(f => new

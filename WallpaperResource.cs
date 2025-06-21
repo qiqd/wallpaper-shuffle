@@ -13,7 +13,7 @@ namespace WallpaperShuffle
         public static List<WallpaperSourceItem> WallpaperSourceItems;
         public static string WallpaperSaveDirPath = Path.Combine(Environment.CurrentDirectory, "wallpaper");
         public static string WallpaperSourcesPath = Path.Combine(Environment.CurrentDirectory, "wallpaperSource.json");
-
+       
         static WallpaperResource()
         {
             string saveDirPath = Properties.Settings.Default.WallpaperSaveDirPath;
@@ -57,49 +57,53 @@ namespace WallpaperShuffle
             {
                 using (HttpClient httpClient = new HttpClient())
                 {
-                    HttpResponseMessage response = await httpClient.GetAsync(url);
-                    response.EnsureSuccessStatusCode();
-
-                    // 1. 获取响应流
-                    using (Stream responseStream = await response.Content.ReadAsStreamAsync())
+                    // 使用 ResponseHeadersRead 避免缓冲整个响应
+                    using (HttpResponseMessage response = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
                     {
-                        // 2. 判断图片类型（通过文件头识别更可靠）
-                        string fileExtension = GetImageFileExtension(responseStream);
+                        response.EnsureSuccessStatusCode();
 
-                        if (string.IsNullOrEmpty(fileExtension))
+                        using (Stream responseStream = await response.Content.ReadAsStreamAsync())
                         {
-                            throw new InvalidDataException("无法识别图片格式");
+                            // 1. 读取文件头判断图片类型
+                            byte[] headerBytes = new byte[12];
+                            int bytesRead = await responseStream.ReadAsync(headerBytes, 0, headerBytes.Length);
+
+                            if (bytesRead < 4)
+                                throw new InvalidDataException("图片数据太小，无法识别");
+
+                            string fileExtension = GetImageFileExtension(headerBytes);
+                            if (string.IsNullOrEmpty(fileExtension))
+                                throw new InvalidDataException("无法识别图片格式");
+
+                            // 2. 构造文件名
+                            long unixTimestampSeconds = ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeSeconds();
+                            string fileName = Path.Combine(WallpaperSaveDirPath, $"{unixTimestampSeconds}.{fileExtension}");
+
+                            // 3. 创建文件流并写入已读取的头部
+                            using (FileStream fileStream = File.Create(fileName))
+                            {
+                                await fileStream.WriteAsync(headerBytes, 0, bytesRead);
+
+                                // 4. 流式复制剩余内容（避免整张图进入内存）
+                                await responseStream.CopyToAsync(fileStream);
+                            }
+
+                           
+                            Debug.WriteLine($"---{DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}--- 图片已保存为：{fileName}");
+                           
                         }
-
-                        // 3. 重置流位置以便后续读取
-                        responseStream.Position = 0;
-                        long unixTimestampSeconds = ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeSeconds();
-
-                        // 4. 生成文件名（例如：image-20250620.png）
-                        string fileName = WallpaperSaveDirPath + $"\\{unixTimestampSeconds}.{fileExtension}";
-
-                        // 5. 保存文件
-                        using (FileStream fileStream = File.Create(fileName))
-                        {
-                            await responseStream.CopyToAsync(fileStream);
-                        }
-
-                        Debug.WriteLine($"图片已保存为：{fileName}");
                     }
                 }
             }
             catch (Exception ex)
             {
-                File.AppendAllText(errLogPath, $"下载图片失败: {ex.Message}\n{ex.StackTrace}\n URL:{url}");
+                string logMessage = $"下载图片失败: {ex.Message}\n{ex.StackTrace}\nURL:{url}\n";
+                File.AppendAllText(errLogPath, logMessage);
             }
         }
 
-        private static string GetImageFileExtension(Stream stream)
+        private static string GetImageFileExtension(byte[] buffer)
         {
-            byte[] buffer = new byte[12]; // 扩展为12字节以支持 WebP 的判断
-            int read = stream.Read(buffer, 0, 12);
-            if (read < 12) return null;
-
             // JPEG: starts with FF D8 FF
             if (buffer[0] == 0xFF && buffer[1] == 0xD8 && buffer[2] == 0xFF)
                 return "jpg";
@@ -129,4 +133,5 @@ namespace WallpaperShuffle
             return null;
         }
     }
+
 }

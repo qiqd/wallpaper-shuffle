@@ -30,7 +30,7 @@ namespace WallpaperShuffle
                .Build();
             ITrigger cleanupOldTrigger = TriggerBuilder.Create()
              .WithIdentity(CleanupWallpaperTriggerName, WallpaperGroup)
-             .StartAt(DateTime.UtcNow.AddSeconds(10)) // 10秒后开始
+             .StartAt(DateTime.UtcNow.AddSeconds(30)) // 30秒后开始
              .WithSimpleSchedule(x => x
                 .WithIntervalInMinutes(CleanupIntervalMinutes) // 设置清理间隔时间
                  .RepeatForever())
@@ -62,17 +62,18 @@ namespace WallpaperShuffle
               .WithIdentity(PreloadWallpaperTriggerName, WallpaperGroup)
               .StartAt(DateTime.UtcNow.AddSeconds(10)) // 10秒后开始
               .WithSimpleSchedule(x => x
-                 .WithIntervalInSeconds(IntervalMinutes * 60 - 30)
+                 .WithIntervalInSeconds(interval * 60 - 30)
                   .RepeatForever())
               .Build();
-            await this.scheduler.RescheduleJob(new TriggerKey(PreloadWallpaperTriggerName, WallpaperGroup), newPreloadTrigger);
+           await this.scheduler.RescheduleJob(new TriggerKey(PreloadWallpaperTriggerName, WallpaperGroup), newPreloadTrigger);
+             
         }
 
         public async void OnCleanupInternalChange(int interval)
         {
             ITrigger newCleanupOldTrigger = TriggerBuilder.Create()
              .WithIdentity(CleanupWallpaperTriggerName, WallpaperGroup)
-             .StartAt(DateTime.UtcNow.AddSeconds(10)) // 10秒后开始
+             .StartAt(DateTime.UtcNow.AddSeconds(interval)) // 10秒后开始
              .WithSimpleSchedule(x => x
                 .WithIntervalInMinutes(interval) // 设置清理间隔时间
                  .RepeatForever())
