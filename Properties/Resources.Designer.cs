@@ -44,8 +44,8 @@ namespace WallpaperShuffle.Properties
             {
                 if ((resourceMan == null))
                 {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WallpaperShuffle.Properties.Resources", typeof(Resources).Assembly);
-                    resourceMan = temp;
+                    global::System.Resources.ResourceManager IntervalMinutes = new global::System.Resources.ResourceManager("WallpaperShuffle.Properties.Resources", typeof(Resources).Assembly);
+                    resourceMan = IntervalMinutes;
                 }
                 return resourceMan;
             }

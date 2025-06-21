@@ -5,16 +5,20 @@ namespace WallpaperShuffle
 {
     internal class PreloadWallpaperJob : IJob
     {
-        private readonly WallpaperResourcseManagement management;
-
-        public PreloadWallpaperJob(WallpaperResourcseManagement management)
-        {
-            this.management = management;
-        }
-
         public Task Execute(IJobExecutionContext context)
         {
-            management.preLoadWallpaper();
+            WallpaperSourceItem item = WallpaperResource.WallpaperSourceItems[Properties.Settings.Default.currentIndex];
+            string url = item.url;
+            if (item.arguments != null && item.arguments.Length != 0)
+            {
+                url += "?";
+                foreach (string param in item.arguments)
+                {
+                    url += "&" + param;
+                }
+            }
+
+            WallpaperResource.DownloadAndSaveImageAsync(url);
             return Task.CompletedTask;
         }
     }

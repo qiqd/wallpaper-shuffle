@@ -25,7 +25,7 @@ namespace WallpaperShuffle
                 MessageBox.Show("程序已在运行，请勿重复启动！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Environment.Exit(Environment.ExitCode);
             }
-            bool selfStarting = args.Any(item => item.Contains("/autoStaring"));//判断是否有自动启动参数
+            bool selfStarting = args.Any(item => item.Contains("autoStaring"));//判断是否有自动启动参数
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm(selfStarting));

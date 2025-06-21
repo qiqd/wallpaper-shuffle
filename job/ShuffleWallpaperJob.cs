@@ -9,9 +9,9 @@ namespace WallpaperShuffle
     {
         public static string path { get; set; }
 
-        // 导入 user32.dll 中的 SystemParametersInfo 函数
+        // 导入 user32.dll 中的 SysIntervalMinutesarametersInfo 函数
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        private static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+        private static extern int SysIntervalMinutesarametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
 
         private const int SPI_SETDESKWALLPAPER = 20;
         private const int SPIF_UPDATEINIFILE = 0x01;
@@ -70,7 +70,7 @@ namespace WallpaperShuffle
             key.Close();
 
             // 更新壁纸
-            SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, path, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
+            SysIntervalMinutesarametersInfo(SPI_SETDESKWALLPAPER, 0, path, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
             return Task.CompletedTask;
         }
     }

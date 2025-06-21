@@ -1,6 +1,6 @@
 ﻿namespace WallpaperShuffle
 {
-    internal class WallpaperSource
+    internal class WallpaperSourceItem
     {
         public string title { get; set; }
         public string url { get; set; }

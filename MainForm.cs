@@ -1,80 +1,50 @@
-﻿using Microsoft.Win32;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WallpaperShuffle
 {
     public partial class MainForm : Form
     {
-        private readonly WallpaperResourcseManagement wallpaperResourcseManagement;
+        private readonly SlidehowManager slidehowManager;
+        private readonly RegisterHandle registerHandle;
+        private readonly bool selfStaring;
 
         public MainForm(bool selfStaring)
         {
             InitializeComponent();
-            Debug.WriteLine(GetSlideshowDuration());
-            this.wallpaperResourcseManagement = new WallpaperResourcseManagement();
-            this.Load += async (s, e) => await LoadWalpaperResources();
+            WallpaperResource.LoadWallpaperResources();
+            this.selfStaring = selfStaring;
+            this.slidehowManager = new SlidehowManager();
+            this.registerHandle = new RegisterHandle();
         }
 
-        public int GetSlideshowDuration()
+        private void MainFormLoad(object sender, EventArgs e)
         {
-            // 定义注册表路径和键名
-            string registryPath = @"Control Panel\Desktop\Slideshow";
-            string keyName = "Duration";
-
-            // 打开注册表项
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(registryPath))
+            if (selfStaring)
             {
-                if (key != null)
+                this.Hide();
+                this.ShowInTaskbar = false;
+                base.SetVisibleCore(false);
+            }
+
+            this.registerHandle.LoadInterval();
+            this.slidehowManager.InitScheduler();
+            this.AutoBootCheckBox.Checked = Properties.Settings.Default.AutoBoot;
+            this.AutoPlayIntervals.Value = Properties.Settings.Default.IntervalMinutes;
+            this.CleanupInterval.Value = Properties.Settings.Default.CleanupIntervalMinutes;
+            this.Invoke(new Action(() =>
+            {
+                foreach (var item in WallpaperResource.WallpaperSourceItems)
                 {
-                    // 读取Duration值
-                    object durationValue = key.GetValue(keyName);
-                    if (durationValue != null)
-                    {
-                        return Convert.ToInt32(durationValue);
-                    }
+                    this.WallpaperSourceComboBox.Items.Add(item.title);
                 }
-            }
-
-            // 如果没有找到值，返回默认值（例如：60秒）
-            return 999;
-        }
-
-        private async Task LoadWalpaperResources()
-        {
-            List<WallpaperSource> wallpaperSources = await wallpaperResourcseManagement.readLocalWallpaperResources();
-            if (wallpaperSources == null || wallpaperSources.Count == 0)
-            {
-                MessageBox.Show("没有可用的壁纸资源"); return;
-            }
-            this.BeginInvoke(new Action(() =>
-            {
-                wallpaperSources.ForEach(item =>
-                {
-                    Debug.WriteLine($"添加壁纸资源: {item.title}");
-                    int index = this.WallpaperCategoryComboBox.Items.Add(item.title);
-                });
-                this.WallpaperCategoryComboBox.SelectedIndex = 0;
             }));
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            WallpaperSource wallpaperSource = new WallpaperSource();
-            wallpaperSource.title = "测试标题";
-            wallpaperSource.url = "https://example.com/wallpaper.jpg";
-            wallpaperSource.arguments = new string[] { "arg1", "arg2" };
-
-            string json = JsonConvert.SerializeObject(wallpaperSource, Formatting.Indented);
-            List<WallpaperSource> wallpaperSources = new List<WallpaperSource>();
-            Debug.WriteLine(json);
-            string current = Environment.CurrentDirectory;
-            File.WriteAllText(current + "wallpaperSource.json", json);
+            this.WallpaperSourceComboBox.SelectedIndex = Properties.Settings.Default.currentIndex;
+            Properties.Settings.Default.Save();
+            this.slidehowManager.InitPreloadTrigger();
+            this.slidehowManager.InitCleanupTrigger();
         }
 
         private void OnWallpaperCategoryComboBoxChange(object sender, EventArgs e)
@@ -83,6 +53,154 @@ namespace WallpaperShuffle
             Properties.Settings.Default.currentIndex = comboBox.SelectedIndex;
             Properties.Settings.Default.Save();
             //wallpaperResourcseManagement.updateWallpaperSources();
+        }
+
+        private void ChangeWallpaperSorcesFIle(object sender, EventArgs e)
+        {
+            try
+            {
+                string errLogPath = Path.Combine(Environment.CurrentDirectory, "wallpaperSource.json");
+                // 确保路径被引号包裹
+                Process process = Process.Start("notepad.exe", $"\"{errLogPath}\"");
+                if (process == null)
+                {
+                    MessageBox.Show("无法打开壁纸配置文件，请检查文件是否存在。");
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("打开壁纸配置文件失败。");
+            }
+        }
+
+        private void ShowLogFile(object sender, EventArgs e)
+        {
+            try
+            {
+                string errLogPath = Path.Combine(Environment.CurrentDirectory, "error.log");
+                Process.Start("notepad.exe", errLogPath);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("打开错误日志文件失败。");
+            }
+        }
+
+        private void ChangeWallpaperSaveDir(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+            folderBrowserDialog.Description = "请选择一个用来保存下载壁纸的文件夹";
+            DialogResult result = folderBrowserDialog.ShowDialog();
+            if (result == DialogResult.Cancel) return;
+            Properties.Settings.Default.WallpaperSaveDirPath = folderBrowserDialog.SelectedPath;
+            WallpaperResource.WallpaperSaveDirPath = folderBrowserDialog.SelectedPath;
+        }
+
+        private void RestoreDefaultSetting(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("确定要恢复默认设置吗？", "确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult == DialogResult.No) return;
+
+            Properties.Settings.Default.Reset();
+            WallpaperResource.LoadWallpaperResources();
+            WallpaperResource.WallpaperSaveDirPath = Path.Combine(Environment.CurrentDirectory, "wallpaper");
+        }
+
+        private void EnableAutoBoot(object sender, EventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            if (checkBox.Checked)
+            {
+                this.registerHandle.SetStartup();
+            }
+            else
+            {
+                this.registerHandle.RemoveStartup();
+            }
+        }
+
+        private void UsageGuideClick(object sender, EventArgs e)
+        {
+            try
+            {
+                string errLogPath = Path.Combine(Environment.CurrentDirectory, "UsageGuide.md");
+                Process.Start("notepad.exe", errLogPath);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("打开使用指导失败。");
+            }
+        }
+
+        private void WallpaperSourceChange(object sender, EventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            Properties.Settings.Default.currentIndex = comboBox.SelectedIndex;
+            Properties.Settings.Default.ResourceTitle = WallpaperResource.WallpaperSourceItems[comboBox.SelectedIndex].title;
+        }
+
+        private void LanguageShowChange(object sender, EventArgs e)
+        {
+        }
+
+        private void ShowMainFormStrip(object sender, EventArgs e)
+        {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+            this.ShowInTaskbar = true;
+            base.SetVisibleCore(true);
+            this.Activate();
+        }
+
+        private void QuitAppStrip(object sender, EventArgs e)
+        {
+            this.Dispose();
+            Environment.Exit(Environment.ExitCode);
+        }
+
+        private void MainFormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
+        }
+
+        private void EnableAutoCleanup(object sender, EventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            if (!checkBox.Checked)
+            {
+                DialogResult dialogResult = MessageBox.Show("关闭自动清理功能后，程序将不再定期删除旧壁纸文件。是否关闭自动清理功能？。", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                if (dialogResult == DialogResult.Cancel)
+                {
+                    checkBox.Checked = true;
+                    return;
+                }
+                this.slidehowManager.PauseCleanupTrigger();
+            }
+            else
+            {
+                this.slidehowManager.ResumeCleanupTrigger();
+            }
+        }
+
+        private void OnIntervalCalueChange(object sender, EventArgs e)
+        {
+            NumericUpDown numericUpDown = sender as NumericUpDown;
+            int value = (int)numericUpDown.Value;
+            this.registerHandle.ChangeInterval(value * 60000);
+            Properties.Settings.Default.IntervalMinutes = value;
+            Properties.Settings.Default.Save();
+            this.slidehowManager.OnInternalChange(value);
+        }
+
+        private void OnCleanupIntervalChange(object sender, EventArgs e)
+        {
+            NumericUpDown numericUpDown = sender as NumericUpDown;
+            int value = (int)numericUpDown.Value;
+            Properties.Settings.Default.CleanupIntervalMinutes = value;
+            Properties.Settings.Default.Save();
+            this.slidehowManager.OnCleanupInternalChange(value);
         }
     }
 }

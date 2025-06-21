@@ -34,5 +34,65 @@ namespace WallpaperShuffle.Properties {
                 this["currentIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Bing每日随机壁纸")]
+        public string ResourceTitle {
+            get {
+                return ((string)(this["ResourceTitle"]));
+            }
+            set {
+                this["ResourceTitle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoBoot {
+            get {
+                return ((bool)(this["AutoBoot"]));
+            }
+            set {
+                this["AutoBoot"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WallpaperSaveDirPath {
+            get {
+                return ((string)(this["WallpaperSaveDirPath"]));
+            }
+            set {
+                this["WallpaperSaveDirPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int CleanupIntervalMinutes {
+            get {
+                return ((int)(this["CleanupIntervalMinutes"]));
+            }
+            set {
+                this["CleanupIntervalMinutes"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int IntervalMinutes {
+            get {
+                return ((int)(this["IntervalMinutes"]));
+            }
+            set {
+                this["IntervalMinutes"] = value;
+            }
+        }
     }
 }
