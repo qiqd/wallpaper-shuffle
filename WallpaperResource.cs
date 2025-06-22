@@ -37,6 +37,12 @@ namespace WallpaperShuffle
             {
                 string values = File.ReadAllText(WallpaperSourcesPath);
                 WallpaperSourceItems = JsonConvert.DeserializeObject<List<WallpaperSourceItem>>(values);
+                int currentIndex = Properties.Settings.Default.currentIndex;
+                if (currentIndex >= WallpaperSourceItems.Count)
+                {
+                    Properties.Settings.Default.currentIndex = 0;
+                    Properties.Settings.Default.Save();
+                }
                 WallpaperSourceItem item = WallpaperSourceItems.Find(i => i.title.Equals(currentTitle != "" ? currentTitle : "Bing每日随机壁纸"));
                 return item;
             }
@@ -87,6 +93,7 @@ namespace WallpaperShuffle
 
                                 // 4. 流式复制剩余内容（避免整张图进入内存）
                                 await responseStream.CopyToAsync(fileStream);
+                                DLLManager.SendMessageToAllWindows("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Wallpapers");
                             }
 
                             Debug.WriteLine($"---{DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}--- 图片已保存为：{fileName}");

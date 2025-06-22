@@ -7,14 +7,7 @@ namespace WallpaperShuffle
     {
         public Task Execute(IJobExecutionContext context)
         {
-            int count = WallpaperResource.WallpaperSourceItems.Count;
-            int currentIndex = Properties.Settings.Default.currentIndex;
-            if (currentIndex >= count)
-            {
-                Properties.Settings.Default.currentIndex = 0;
-                Properties.Settings.Default.Save();
-            }
-            WallpaperSourceItem item = WallpaperResource.WallpaperSourceItems[currentIndex >= count ? 0 : currentIndex];
+            WallpaperSourceItem item = WallpaperResource.WallpaperSourceItems[Properties.Settings.Default.currentIndex];
             string url = item.url;
             if (item.arguments != null && item.arguments.Length != 0)
             {

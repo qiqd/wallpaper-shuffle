@@ -20,7 +20,7 @@ namespace WallpaperShuffle
                 .Where(f => imageExtensions.Contains(Path.GetExtension(f)))
                 .ToArray();
 
-            if (imageFiles.Length < 30) return Task.CompletedTask;
+            if (imageFiles.Length < 31) return Task.CompletedTask;
             // 按时间戳升序排序
             string[] sortedFiles = imageFiles
                 .Select(f => new
@@ -29,7 +29,7 @@ namespace WallpaperShuffle
                     Timestamp = Convert.ToInt64(Path.GetFileNameWithoutExtension(f))
                 })
                 .OrderBy(x => x.Timestamp) // 升序排列
-                .Take(15) // 取前15个
+                .Take(30) // 取前15个
                 .Select(x => x.FilePath)
                 .ToArray();
             try

@@ -1,26 +1,30 @@
 ﻿using Microsoft.Win32;
 using Microsoft.Win32.TaskScheduler;
 using System;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace WallpaperShuffle
 {
     internal class RegisterHandle
     {
+        //private const uint SPI_SETDESKWALLPAPER = 0x0014;
+        //private const uint SPIF_UPDATEINIFILE = 0x01;
+        //private const uint SPIF_SENDCHANGE = 0x02;
+
+        //// 定义 Windows API 常量和函数
+        //private const int HWND_BROADCAST = 0xffff;
+
+        //private const uint WM_SETTINGCHANGE = 0x001A;
+        //private const uint SMTO_NORMAL = 0x0002;
+        //private const uint TIMEOUT = 100;
         private const string TaskName = "WallpaperShuffleAutoStart";
 
         private const string SliderInterval = @"Control Panel\Personalization\Desktop Slideshow";
 
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern bool SystemParametersInfo(uint uiAction, uint uiParam, IntPtr pvParam, uint fWinIni);
+        //[DllImport("user32.dll", SetLastError = true)]
+        //private static extern bool SystemParametersInfo(uint uiAction, uint uiParam, IntPtr pvParam, uint fWinIni);
 
-        private const uint SPI_SETDESKWALLPAPER = 0x0014;
-        private const uint SPIF_UPDATEINIFILE = 0x01;
-        private const uint SPIF_SENDCHANGE = 0x02;
-
-        // 刷新壁纸相关设置
-
+        // 加载壁纸切换间隔相关设置
         public void LoadInterval()
         {
             // 打开注册表项
@@ -42,7 +46,8 @@ namespace WallpaperShuffle
             {
                 if (key == null) return;
                 key.SetValue("Interval", newInterval);
-                SystemParametersInfo(0, 0, IntPtr.Zero, SPIF_UPDATEINIFILE | SPIF_SENDCHANGE);
+                //SystemParametersInfo(0, 0, IntPtr.Zero, SPIF_UPDATEINIFILE | SPIF_SENDCHANGE);
+                DLLManager.SendMessageToAllWindows(SliderInterval);
             }
         }
 

@@ -2,7 +2,7 @@
 ;由 Inno Setup 脚本向导 生成的脚本,有关创建 INNO SETUP 脚本文件的详细信息，请参阅文档！!
 
 #define MyAppName "WallpaperShuffle"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "v1.0.0"
 #define MyAppPublisher "OguriCap"
 #define MyAppURL "https://github.com/qiqd/wallpaper-shuffle"
 #define MyAppExeName "WallpaperShuffle.exe"
