@@ -2,7 +2,7 @@
 {
     internal class Test
     {
-        public static async fn()
+        public static void fn()
         {
             //List<WallpaperSourceItem> items = WallpaperResource.LoadWallpaperResources();
             //string title = Properties.Settings.Default.ResourceTitle;

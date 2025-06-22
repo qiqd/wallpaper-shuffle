@@ -320,6 +320,7 @@
             this.AutoBootCheckBox.AutoSize = true;
             this.AutoBootCheckBox.CheckAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.AutoBootCheckBox.Checked = global::WallpaperShuffle.Properties.Settings.Default.AutoBoot;
+            this.AutoBootCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.AutoBootCheckBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.AutoBootCheckBox.Location = new System.Drawing.Point(9, 107);
             this.AutoBootCheckBox.Name = "AutoBootCheckBox";
@@ -404,6 +405,7 @@
             // label9
             // 
             this.label9.AutoEllipsis = true;
+            this.label9.BackColor = System.Drawing.Color.White;
             this.label9.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label9.Font = new System.Drawing.Font("幼圆", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label9.Location = new System.Drawing.Point(3, 103);

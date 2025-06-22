@@ -13,7 +13,7 @@ namespace WallpaperShuffle
         public static List<WallpaperSourceItem> WallpaperSourceItems;
         public static string WallpaperSaveDirPath = Path.Combine(Environment.CurrentDirectory, "wallpaper");
         public static string WallpaperSourcesPath = Path.Combine(Environment.CurrentDirectory, "wallpaperSource.json");
-       
+
         static WallpaperResource()
         {
             string saveDirPath = Properties.Settings.Default.WallpaperSaveDirPath;
@@ -23,6 +23,7 @@ namespace WallpaperShuffle
             }
             else
             {
+                if (!Directory.Exists(WallpaperSaveDirPath)) Directory.CreateDirectory(WallpaperSaveDirPath);
                 Properties.Settings.Default.WallpaperSaveDirPath = WallpaperSaveDirPath;
                 Properties.Settings.Default.Save();
             }
@@ -88,9 +89,7 @@ namespace WallpaperShuffle
                                 await responseStream.CopyToAsync(fileStream);
                             }
 
-                           
                             Debug.WriteLine($"---{DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}--- 图片已保存为：{fileName}");
-                           
                         }
                     }
                 }
@@ -133,5 +132,4 @@ namespace WallpaperShuffle
             return null;
         }
     }
-
 }
