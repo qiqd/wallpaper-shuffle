@@ -1,10 +1,8 @@
-﻿using System.Threading.Tasks;
-
-namespace WallpaperShuffle.test
+﻿namespace WallpaperShuffle.test
 {
     internal class Test
     {
-        public static async Task fn()
+        public static async fn()
         {
             //List<WallpaperSourceItem> items = WallpaperResource.LoadWallpaperResources();
             //string title = Properties.Settings.Default.ResourceTitle;

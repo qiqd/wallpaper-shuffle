@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("WallpaperShuffle")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("这是一个可以自动获取随机壁纸的应用。")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("OguriCap")]
 [assembly: AssemblyProduct("WallpaperShuffle")]
 [assembly: AssemblyCopyright("Copyright ©  2025")]
 [assembly: AssemblyTrademark("")]

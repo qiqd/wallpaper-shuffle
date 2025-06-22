@@ -49,7 +49,7 @@ namespace WallpaperShuffle.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool AutoBoot {
             get {
                 return ((bool)(this["AutoBoot"]));
@@ -97,13 +97,37 @@ namespace WallpaperShuffle.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool AutoCleanup {
             get {
                 return ((bool)(this["AutoCleanup"]));
             }
             set {
                 this["AutoCleanup"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://gitee.com/qijiugit/wallpaper-shuffle")]
+        public string GiteeLink {
+            get {
+                return ((string)(this["GiteeLink"]));
+            }
+            set {
+                this["GiteeLink"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GitHubLink {
+            get {
+                return ((string)(this["GitHubLink"]));
+            }
+            set {
+                this["GitHubLink"] = value;
             }
         }
     }

@@ -42,8 +42,8 @@ namespace WallpaperShuffle
             }
             catch (Exception ex)
             {
-                string errLogPath = Path.Combine(Environment.CurrentDirectory, "error.log");
-                File.AppendAllText(errLogPath, $"删除图片失败: {ex.Message}\n{ex.StackTrace}\n");
+                string logPath = Path.Combine(Environment.CurrentDirectory, "error.log");
+                File.AppendAllText(logPath, $"删除图片失败: {ex.Message}\n{ex.StackTrace}\n");
                 throw new Exception(ex.Message);
             }
             return Task.CompletedTask;

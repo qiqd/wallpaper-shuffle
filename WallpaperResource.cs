@@ -9,7 +9,7 @@ namespace WallpaperShuffle
 {
     internal class WallpaperResource
     {
-        public static string errLogPath = Path.Combine(Environment.CurrentDirectory, "error.log");
+        public static string path = Path.Combine(Environment.CurrentDirectory, "error.log");
         public static List<WallpaperSourceItem> WallpaperSourceItems;
         public static string WallpaperSaveDirPath = Path.Combine(Environment.CurrentDirectory, "wallpaper");
         public static string WallpaperSourcesPath = Path.Combine(Environment.CurrentDirectory, "wallpaperSource.json");
@@ -42,7 +42,7 @@ namespace WallpaperShuffle
             catch (Exception ex)
             {
                 //MessageBox.Show("无法加载壁纸资源，请检查文件格式或内容是否正确。");
-                File.AppendAllText(errLogPath, $"无法加载壁纸资源: {ex.Message}\n{ex.StackTrace}\\n");
+                File.AppendAllText(path, $"无法加载壁纸资源: {ex.Message}\n{ex.StackTrace}\\n");
                 WallpaperSourceItem sourceItem = new WallpaperSourceItem() { title = "Bing每日随机壁纸", url = "https://bing.img.run/rand_uhd.php" };
                 WallpaperSourceItems = new List<WallpaperSourceItem>() { sourceItem };
                 string json = JsonConvert.SerializeObject(WallpaperSourceItems);
@@ -98,7 +98,7 @@ namespace WallpaperShuffle
             catch (Exception ex)
             {
                 string logMessage = $"下载图片失败: {ex.Message}\n{ex.StackTrace}\nURL:{url}\n";
-                File.AppendAllText(errLogPath, logMessage);
+                File.AppendAllText(path, logMessage);
             }
         }
 

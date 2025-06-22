@@ -1,14 +1,15 @@
 ﻿using Microsoft.Win32;
+using Microsoft.Win32.TaskScheduler;
 using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace WallpaperShuffle
 {
     internal class RegisterHandle
     {
-        private readonly string appName = Process.GetCurrentProcess().ProcessName;
-        private const string runKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+        private const string TaskName = "WallpaperShuffleAutoStart";
+
         private const string SliderInterval = @"Control Panel\Personalization\Desktop Slideshow";
 
         [DllImport("user32.dll", SetLastError = true)]
@@ -45,29 +46,40 @@ namespace WallpaperShuffle
             }
         }
 
-        public bool SetStartup()
+        // 注册开机自启动任务
+        public void RegisterTask()
         {
-            using (RegistryKey startupKey = Registry.CurrentUser.OpenSubKey(runKey, true))
+            using (TaskService ts = new TaskService())
             {
-                if (startupKey.GetValue(appName) == null)
-                {
-                    string path = $"\"{System.Windows.Forms.Application.ExecutablePath}\" /autoStarting";
-                    startupKey.SetValue(appName, path);
-                    return false;
-                }
-                return true;
+                TaskDefinition td = ts.NewTask();
+                td.RegistrationInfo.Description = "开机自启动每日随机壁纸应用。";
+
+                // 触发器：用户登录时
+                td.Triggers.Add(new LogonTrigger { UserId = Environment.UserName });
+
+                // 动作：启动当前应用程序
+                string appPath = Application.ExecutablePath;
+                td.Actions.Add(new ExecAction(appPath, "autoStart", null));
+
+                // 设置任务以最高权限运行
+                td.Principal.RunLevel = TaskRunLevel.Highest;
+
+                // 设置兼容性
+                td.Settings.Compatibility = TaskCompatibility.V2_1;
+
+                // 注册任务
+                ts.RootFolder.RegisterTaskDefinition(TaskName, td);
             }
         }
 
-        public void RemoveStartup()
+        // 删除任务
+        public void UnregisterTask()
         {
-            using (RegistryKey startupKey = Registry.CurrentUser.OpenSubKey(runKey, true))
+            using (TaskService ts = new TaskService())
             {
-                // 检查是否存在当前应用程序的启动项
-                if (startupKey.GetValue(appName) != null)
+                if (ts.RootFolder.Tasks.Exists(TaskName))
                 {
-                    // 删除该启动项
-                    startupKey.DeleteValue(appName);
+                    ts.RootFolder.DeleteTask(TaskName);
                 }
             }
         }

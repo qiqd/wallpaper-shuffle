@@ -18,6 +18,7 @@ namespace WallpaperShuffle
             this.selfStaring = selfStaring;
             this.slidehowManager = new SlidehowManager();
             this.registerHandle = new RegisterHandle();
+            this.WallpaperSaveDirTextBox.Text = WallpaperResource.WallpaperSaveDirPath;
             DLLManager.WindowRoundedCornersHandle(this.WallpaperShuffleContextMenuStrip.Handle);
         }
 
@@ -60,9 +61,9 @@ namespace WallpaperShuffle
         {
             try
             {
-                string errLogPath = Path.Combine(Environment.CurrentDirectory, "wallpaperSource.json");
+                string path = Path.Combine(Environment.CurrentDirectory, "wallpaperSource.json");
                 // 确保路径被引号包裹
-                Process process = Process.Start("notepad.exe", $"\"{errLogPath}\"");
+                Process process = Process.Start("notepad.exe", $"\"{path}\"");
                 if (process == null)
                 {
                     MessageBox.Show("无法打开壁纸配置文件，请检查文件是否存在。");
@@ -72,19 +73,6 @@ namespace WallpaperShuffle
             catch (Exception)
             {
                 MessageBox.Show("打开壁纸配置文件失败。");
-            }
-        }
-
-        private void ShowLogFile(object sender, EventArgs e)
-        {
-            try
-            {
-                string errLogPath = Path.Combine(Environment.CurrentDirectory, "error.log");
-                Process.Start("notepad.exe", errLogPath);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("打开错误日志文件失败。");
             }
         }
 
@@ -116,13 +104,14 @@ namespace WallpaperShuffle
             Properties.Settings.Default.Save();
             if (checkBox.Checked)
             {
-                this.registerHandle.SetStartup();
+                this.registerHandle.RegisterTask();
             }
             else
             {
-                this.registerHandle.RemoveStartup();
+                this.registerHandle.UnregisterTask();
             }
         }
+
         private void EnableAutoCleanup(object sender, EventArgs e)
         {
             CheckBox checkBox = sender as CheckBox;
@@ -143,12 +132,26 @@ namespace WallpaperShuffle
                 this.slidehowManager.ResumeCleanupTrigger();
             }
         }
+
+        private void ShowLogFile(object sender, EventArgs e)
+        {
+            try
+            {
+                string path = Path.Combine(Environment.CurrentDirectory, "error.log");
+                Process.Start("notepad.exe", path);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("打开错误日志文件失败。");
+            }
+        }
+
         private void UsageGuideClick(object sender, EventArgs e)
         {
             try
             {
-                string errLogPath = Path.Combine(Environment.CurrentDirectory, "UsageGuide.md");
-                Process.Start("notepad.exe", errLogPath);
+                string path = Path.Combine(Environment.CurrentDirectory, "使用指导.md");
+                Process.Start("notepad.exe", path);
             }
             catch (Exception)
             {
@@ -189,8 +192,6 @@ namespace WallpaperShuffle
             this.Hide();
         }
 
-       
-
         private void OnIntervalCalueChange(object sender, EventArgs e)
         {
             NumericUpDown numericUpDown = sender as NumericUpDown;
@@ -208,6 +209,31 @@ namespace WallpaperShuffle
             Properties.Settings.Default.CleanupIntervalMinutes = value;
             Properties.Settings.Default.Save();
             this.slidehowManager.OnCleanupInternalChange(value);
+        }
+
+        private void ShowWallpaperSaveDir(object sender, EventArgs e)
+        {
+            Process.Start("explorer.exe", WallpaperResource.WallpaperSaveDirPath);
+        }
+
+        private void GiteeLinkClick(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = Properties.Settings.Default.GiteeLink,
+                UseShellExecute = true
+            };
+            Process.Start(psi);
+        }
+
+        private void GitHubLinkClick(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = Properties.Settings.Default.GitHubLink,
+                UseShellExecute = true
+            };
+            Process.Start(psi);
         }
     }
 }

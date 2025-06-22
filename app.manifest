@@ -19,8 +19,8 @@
 				<requestedExecutionLevel level="requireAdministrator" uiAccess="false" />
 			</requestedPrivileges>
 			<applicationRequestMinimum>
-				<PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
 				<defaultAssemblyRequest permissionSetReference="Custom" />
+				<PermissionSet ID="Custom" SameSite="site" Unrestricted="true" />
 			</applicationRequestMinimum>
 		</security>
 	</trustInfo>
@@ -55,16 +55,10 @@
 	</application>
 	<!-- 启用 Windows 公共控件和对话框的主题(Windows XP 和更高版本) -->
 	<!--
-  <dependency>
-    <dependentAssembly>
-      <assemblyIdentity
-          type="win32"
-          name="Microsoft.Windows.Common-Controls"
-          version="6.0.0.0"
-          processorArchitecture="*"
-          publicKeyToken="6595b64144ccf1df"
-          language="*" />
-    </dependentAssembly>
-  </dependency>
-  -->
+	<dependency>
+		<dependentAssembly>
+			<assemblyIdentity type="win32" name="Microsoft.Windows.Common-Controls" version="6.0.0.0" processorArchitecture="*" publicKeyToken="6595b64144ccf1df" language="*" />
+		</dependentAssembly>
+	</dependency>
+	-->
 </assembly>

@@ -9,7 +9,7 @@
       <Value Profile="(Default)">Bing每日随机壁纸</Value>
     </Setting>
     <Setting Name="AutoBoot" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="WallpaperSaveDirPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -21,7 +21,13 @@
       <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="AutoCleanup" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="GiteeLink" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://gitee.com/qijiugit/wallpaper-shuffle</Value>
+    </Setting>
+    <Setting Name="GitHubLink" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>
