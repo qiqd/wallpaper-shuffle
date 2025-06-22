@@ -48,8 +48,6 @@
             this.ShowLogFileBtn = new System.Windows.Forms.Button();
             this.ChangeWallpaperSourceBtn = new System.Windows.Forms.Button();
             this.ChangeWallpaperDirBtn = new System.Windows.Forms.Button();
-            this.EnableAutoCleanupCheckBox = new System.Windows.Forms.CheckBox();
-            this.AutoBootCheckBox = new System.Windows.Forms.CheckBox();
             this.About = new System.Windows.Forms.TabPage();
             this.AboutRightPanel = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -66,6 +64,8 @@
             this.WallpaperShuffleContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ShowMainFormItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EnableAutoCleanupCheckBox = new System.Windows.Forms.CheckBox();
+            this.AutoBootCheckBox = new System.Windows.Forms.CheckBox();
             this.TabControl.SuspendLayout();
             this.Setting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CleanupInterval)).BeginInit();
@@ -301,35 +301,6 @@
             this.ChangeWallpaperDirBtn.UseVisualStyleBackColor = true;
             this.ChangeWallpaperDirBtn.Click += new System.EventHandler(this.ChangeWallpaperSaveDir);
             // 
-            // EnableAutoCleanupCheckBox
-            // 
-            this.EnableAutoCleanupCheckBox.AutoSize = true;
-            this.EnableAutoCleanupCheckBox.CheckAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.EnableAutoCleanupCheckBox.Checked = global::WallpaperShuffle.Properties.Settings.Default.AutoCleanup;
-            this.EnableAutoCleanupCheckBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.EnableAutoCleanupCheckBox.Location = new System.Drawing.Point(214, 107);
-            this.EnableAutoCleanupCheckBox.Name = "EnableAutoCleanupCheckBox";
-            this.EnableAutoCleanupCheckBox.Size = new System.Drawing.Size(134, 19);
-            this.EnableAutoCleanupCheckBox.TabIndex = 0;
-            this.EnableAutoCleanupCheckBox.Text = "自动清理旧壁纸";
-            this.EnableAutoCleanupCheckBox.UseVisualStyleBackColor = true;
-            this.EnableAutoCleanupCheckBox.CheckedChanged += new System.EventHandler(this.EnableAutoCleanup);
-            // 
-            // AutoBootCheckBox
-            // 
-            this.AutoBootCheckBox.AutoSize = true;
-            this.AutoBootCheckBox.CheckAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.AutoBootCheckBox.Checked = global::WallpaperShuffle.Properties.Settings.Default.AutoBoot;
-            this.AutoBootCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.AutoBootCheckBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.AutoBootCheckBox.Location = new System.Drawing.Point(9, 107);
-            this.AutoBootCheckBox.Name = "AutoBootCheckBox";
-            this.AutoBootCheckBox.Size = new System.Drawing.Size(104, 19);
-            this.AutoBootCheckBox.TabIndex = 0;
-            this.AutoBootCheckBox.Text = "开机自启动";
-            this.AutoBootCheckBox.UseVisualStyleBackColor = true;
-            this.AutoBootCheckBox.CheckedChanged += new System.EventHandler(this.EnableAutoBoot);
-            // 
             // About
             // 
             this.About.Controls.Add(this.AboutRightPanel);
@@ -419,13 +390,14 @@
             // 
             this.label8.AutoEllipsis = true;
             this.label8.AutoSize = true;
+            this.label8.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::WallpaperShuffle.Properties.Settings.Default, "Version", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.label8.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label8.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label8.Location = new System.Drawing.Point(79, 65);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(85, 15);
             this.label8.TabIndex = 2;
-            this.label8.Text = "版本 1.0.0";
+            this.label8.Text = global::WallpaperShuffle.Properties.Settings.Default.Version;
             // 
             // pictureBox1
             // 
@@ -492,6 +464,35 @@
             this.ExitItem.Size = new System.Drawing.Size(138, 24);
             this.ExitItem.Text = "退出程序";
             this.ExitItem.Click += new System.EventHandler(this.QuitAppStrip);
+            // 
+            // EnableAutoCleanupCheckBox
+            // 
+            this.EnableAutoCleanupCheckBox.AutoSize = true;
+            this.EnableAutoCleanupCheckBox.CheckAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.EnableAutoCleanupCheckBox.Checked = global::WallpaperShuffle.Properties.Settings.Default.AutoCleanup;
+            this.EnableAutoCleanupCheckBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.EnableAutoCleanupCheckBox.Location = new System.Drawing.Point(214, 107);
+            this.EnableAutoCleanupCheckBox.Name = "EnableAutoCleanupCheckBox";
+            this.EnableAutoCleanupCheckBox.Size = new System.Drawing.Size(134, 19);
+            this.EnableAutoCleanupCheckBox.TabIndex = 0;
+            this.EnableAutoCleanupCheckBox.Text = "自动清理旧壁纸";
+            this.EnableAutoCleanupCheckBox.UseVisualStyleBackColor = true;
+            this.EnableAutoCleanupCheckBox.CheckedChanged += new System.EventHandler(this.EnableAutoCleanup);
+            // 
+            // AutoBootCheckBox
+            // 
+            this.AutoBootCheckBox.AutoSize = true;
+            this.AutoBootCheckBox.CheckAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.AutoBootCheckBox.Checked = global::WallpaperShuffle.Properties.Settings.Default.AutoBoot;
+            this.AutoBootCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.AutoBootCheckBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.AutoBootCheckBox.Location = new System.Drawing.Point(9, 107);
+            this.AutoBootCheckBox.Name = "AutoBootCheckBox";
+            this.AutoBootCheckBox.Size = new System.Drawing.Size(104, 19);
+            this.AutoBootCheckBox.TabIndex = 0;
+            this.AutoBootCheckBox.Text = "开机自启动";
+            this.AutoBootCheckBox.UseVisualStyleBackColor = true;
+            this.AutoBootCheckBox.CheckedChanged += new System.EventHandler(this.EnableAutoBoot);
             // 
             // MainForm
             // 

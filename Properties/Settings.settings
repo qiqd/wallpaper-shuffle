@@ -27,7 +27,10 @@
       <Value Profile="(Default)">https://gitee.com/qijiugit/wallpaper-shuffle</Value>
     </Setting>
     <Setting Name="GitHubLink" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">https://github.com/qiqd/wallpaper-shuffle</Value>
+    </Setting>
+    <Setting Name="Version" Type="System.String" Scope="User">
+      <Value Profile="(Default)">版本 1.0.0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

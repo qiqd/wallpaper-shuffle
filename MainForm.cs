@@ -150,7 +150,7 @@ namespace WallpaperShuffle
         {
             try
             {
-                string path = Path.Combine(Environment.CurrentDirectory, "使用指导.md");
+                string path = Path.Combine(Environment.CurrentDirectory, "UsageGuide.md");
                 Process.Start("notepad.exe", path);
             }
             catch (Exception)
