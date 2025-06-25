@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+
 namespace WallpaperShuffle
 {
     internal static class Program
@@ -10,19 +11,18 @@ namespace WallpaperShuffle
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
-
-        // TODO:需实现是否允许用户在应用启动之后立即清理旧壁纸，以防自启动之后再次从头开始播放。
         private static void Main(string[] args)
-        { //using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
-          //{
-          //    WindowsPrincipal principal = new WindowsPrincipal(identity);
-          //    if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
-          //    {
-          //        MessageBox.Show("该应用需要以管理员身份运行！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-          //        Environment.Exit(Environment.ExitCode);
-          //    }
-          //    ;
-          //}
+        {
+            //using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+            //{
+            //    WindowsPrincipal principal = new WindowsPrincipal(identity);
+            //    if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
+            //    {
+            //        MessageBox.Show("该应用需要以管理员身份运行！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //        Environment.Exit(Environment.ExitCode);
+            //    }
+            //  ;
+            //}
 
             //判断多开
             Process[] processes = Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName);

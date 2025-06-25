@@ -9,10 +9,10 @@ namespace WallpaperShuffle
 {
     internal class WallpaperResource
     {
-        public static string path = Path.Combine(Environment.CurrentDirectory, "error.log");
+        public static string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "error.log");
         public static List<WallpaperSourceItem> WallpaperSourceItems;
-        public static string WallpaperSaveDirPath = Path.Combine(Environment.CurrentDirectory, "wallpaper");
-        public static string WallpaperSourcesPath = Path.Combine(Environment.CurrentDirectory, "wallpaperSource.json");
+        public static string WallpaperSaveDirPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "wallpaper");
+        public static string WallpaperSourcesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "wallpaperSource.json");
 
         static WallpaperResource()
         {
@@ -53,7 +53,7 @@ namespace WallpaperShuffle
                 WallpaperSourceItem sourceItem = new WallpaperSourceItem() { title = "Bing每日随机壁纸", url = "https://bing.img.run/rand_uhd.php" };
                 WallpaperSourceItems = new List<WallpaperSourceItem>() { sourceItem };
                 string json = JsonConvert.SerializeObject(WallpaperSourceItems);
-                File.WriteAllText(Path.Combine(Environment.CurrentDirectory, "wallpaperSource.json"), json);
+                File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "wallpaperSource.json"), json);
                 return sourceItem;
             }
         }

@@ -13,7 +13,7 @@ namespace WallpaperShuffle
 
         public Task Execute(IJobExecutionContext context)
         {
-            string path = Path.Combine(Environment.CurrentDirectory, "wallpaper");
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "wallpaper");
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
             string[] imageFiles = Directory.GetFiles(path)
@@ -42,7 +42,7 @@ namespace WallpaperShuffle
             }
             catch (Exception ex)
             {
-                string logPath = Path.Combine(Environment.CurrentDirectory, "error.log");
+                string logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "error.log");
                 File.AppendAllText(logPath, $"删除图片失败: {ex.Message}\n{ex.StackTrace}\n");
                 throw new Exception(ex.Message);
             }

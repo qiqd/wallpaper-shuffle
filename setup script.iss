@@ -3,7 +3,7 @@
 
 #define MyAppName "WallpaperShuffle"
 #define MyAppVersion "1.0.1"
-#define MyAppPublisher "OguriCap"
+#define MyAppPublisher "OgriCap"
 #define MyAppURL "https://github.com/qiqd/wallpaper-shuffle"
 #define MyAppExeName "WallpaperShuffle.exe"
 #define MyAppAssocName MyAppName + " 文件"
@@ -13,7 +13,7 @@
 [Setup]
 ;注意:AppId 的值唯一标识此应用程序。请勿在安装程序中对其他应用程序使用相同的 AppId 值。
 ;（若要生成新的 GUID，请单击“工具”|”在 IDE 中生成 GUID）。
-AppId={{79086EB3-D432-4EE7-BC71-E8EB9014EC1E}
+AppId={{E0F335AD-DED5-4822-8C58-C15CE2B1A23F}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppVerName={#MyAppName} {#MyAppVersion}
@@ -30,7 +30,7 @@ LicenseFile=D:\Quick access\Desktop\code\.net\WallpaperShuffle\LICENSE
 ;取消下行前面 ; 符号，在非管理安装模式下运行（仅为当前用户安装）.
 ;PrivilegesRequired=lowest
 OutputDir=D:\Quick access\Desktop\setup
-OutputBaseFilename=WallpaperShuffle-setup-v1.0.1
+OutputBaseFilename=WallpaperShuffle
 SetupIconFile=D:\Quick access\Desktop\code\.net\WallpaperShuffle\icon.ico
 SolidCompression=yes
 WizardStyle=modern
@@ -42,21 +42,19 @@ Name: "chs"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: checkablealone
 
 [Files]
-Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_4\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_4\icon.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_4\Microsoft.Extensions.Logging.Abstractions.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_4\Microsoft.Win32.TaskScheduler.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_4\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_4\Quartz.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_4\System.Buffers.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_4\System.Diagnostics.DiagnosticSource.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_4\System.Memory.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_4\System.Numerics.Vectors.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_4\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_4\UsageGuide.md"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_4\WallpaperShuffle.application"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_4\WallpaperShuffle.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_4\WallpaperShuffle.exe.manifest"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_7\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_7\Microsoft.Extensions.Logging.Abstractions.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_7\Microsoft.Win32.TaskScheduler.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_7\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_7\Quartz.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_7\System.Buffers.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_7\System.Diagnostics.DiagnosticSource.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_7\System.Memory.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_7\System.Numerics.Vectors.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_7\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_7\UsageGuide.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_7\WallpaperShuffle.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Quick access\Desktop\code\.net\WallpaperShuffle\publish\Application Files\WallpaperShuffle_1_0_0_7\WallpaperShuffle.exe.manifest"; DestDir: "{app}"; Flags: ignoreversion
 
 [code]
 procedure InitializeWizard();
@@ -76,6 +74,5 @@ Name: "{group}\{cm:ProgramOnTheWeb,{#MyAppName}}"; Filename: "{#MyAppURL}"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
-[Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+ 
 

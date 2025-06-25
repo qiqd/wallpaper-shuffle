@@ -7,6 +7,7 @@ namespace WallpaperShuffle
 {
     public partial class MainForm : Form
     {
+        private readonly string CurrentInstancePath = AppDomain.CurrentDomain.BaseDirectory;
         private readonly SlidehowManager slidehowManager;
         private readonly RegisterHandle registerHandle;
         private readonly bool selfStaring;
@@ -61,7 +62,7 @@ namespace WallpaperShuffle
         {
             try
             {
-                string path = Path.Combine(Environment.CurrentDirectory, "wallpaperSource.json");
+                string path = Path.Combine(CurrentInstancePath, "wallpaperSource.json");
                 // 确保路径被引号包裹
                 ProcessStartInfo processStartInfo = new ProcessStartInfo
                 {
@@ -100,7 +101,7 @@ namespace WallpaperShuffle
 
             Properties.Settings.Default.Reset();
             WallpaperResource.LoadWallpaperResources();
-            WallpaperResource.WallpaperSaveDirPath = Path.Combine(Environment.CurrentDirectory, "wallpaper");
+            WallpaperResource.WallpaperSaveDirPath = Path.Combine(CurrentInstancePath, "wallpaper");
         }
 
         private void EnableAutoBoot(object sender, EventArgs e)
@@ -110,11 +111,13 @@ namespace WallpaperShuffle
             Properties.Settings.Default.Save();
             if (checkBox.Checked)
             {
-                this.registerHandle.RegisterTask();
+                //this.registerHandle.RegisterTask();
+                this.registerHandle.RegisterAutoStart();
             }
             else
             {
-                this.registerHandle.UnregisterTask();
+                //this.registerHandle.UnregisterTask();
+                this.registerHandle.UnregisterAutoStart();
             }
         }
 
@@ -143,7 +146,7 @@ namespace WallpaperShuffle
         {
             try
             {
-                string path = Path.Combine(Environment.CurrentDirectory, "error.log");
+                string path = Path.Combine(CurrentInstancePath, "error.log");
                 ProcessStartInfo processStartInfo = new ProcessStartInfo { FileName = "notepad.exe", Arguments = path, UseShellExecute = false };
                 //processStartInfo.
                 Process.Start(processStartInfo);
@@ -158,7 +161,7 @@ namespace WallpaperShuffle
         {
             try
             {
-                string path = Path.Combine(Environment.CurrentDirectory, "UsageGuide.md");
+                string path = Path.Combine(CurrentInstancePath, "UsageGuide.md");
                 ProcessStartInfo processStartInfo = new ProcessStartInfo
                 {
                     FileName = "notepad.exe",
