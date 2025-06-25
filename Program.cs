@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Principal;
 using System.Windows.Forms;
 
 namespace WallpaperShuffle
@@ -13,17 +12,17 @@ namespace WallpaperShuffle
         /// </summary>
         [STAThread]
         private static void Main(string[] args)
-        {
-            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
-            {
-                WindowsPrincipal principal = new WindowsPrincipal(identity);
-                if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
-                {
-                    MessageBox.Show("该应用需要以管理员身份运行！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Environment.Exit(Environment.ExitCode);
-                }
-                ;
-            }
+        { //using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+          //{
+          //    WindowsPrincipal principal = new WindowsPrincipal(identity);
+          //    if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
+          //    {
+          //        MessageBox.Show("该应用需要以管理员身份运行！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+          //        Environment.Exit(Environment.ExitCode);
+          //    }
+          //    ;
+          //}
+
             //判断多开
             Process[] processes = Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName);
             AppDomain.CurrentDomain.UnhandledException += (sender, e) =>

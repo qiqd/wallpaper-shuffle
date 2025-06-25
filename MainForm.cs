@@ -63,7 +63,13 @@ namespace WallpaperShuffle
             {
                 string path = Path.Combine(Environment.CurrentDirectory, "wallpaperSource.json");
                 // 确保路径被引号包裹
-                Process process = Process.Start("notepad.exe", $"\"{path}\"");
+                ProcessStartInfo processStartInfo = new ProcessStartInfo
+                {
+                    FileName = "notepad.exe",
+                    Arguments = path,
+                    UseShellExecute = false
+                };
+                Process process = Process.Start(processStartInfo);
                 if (process == null)
                 {
                     MessageBox.Show("无法打开壁纸配置文件，请检查文件是否存在。");
@@ -138,7 +144,9 @@ namespace WallpaperShuffle
             try
             {
                 string path = Path.Combine(Environment.CurrentDirectory, "error.log");
-                Process.Start("notepad.exe", path);
+                ProcessStartInfo processStartInfo = new ProcessStartInfo { FileName = "notepad.exe", Arguments = path, UseShellExecute = false };
+                //processStartInfo.
+                Process.Start(processStartInfo);
             }
             catch (Exception)
             {
@@ -151,7 +159,18 @@ namespace WallpaperShuffle
             try
             {
                 string path = Path.Combine(Environment.CurrentDirectory, "UsageGuide.md");
-                Process.Start("notepad.exe", path);
+                ProcessStartInfo processStartInfo = new ProcessStartInfo
+                {
+                    FileName = "notepad.exe",
+                    Arguments = path,
+                    UseShellExecute = false
+                };
+                Process process = Process.Start(processStartInfo);
+                if (process == null)
+                {
+                    MessageBox.Show("无法打开使用指导文件，请检查文件是否存在。");
+                    return;
+                }
             }
             catch (Exception)
             {
@@ -213,7 +232,13 @@ namespace WallpaperShuffle
 
         private void ShowWallpaperSaveDir(object sender, EventArgs e)
         {
-            Process.Start("explorer.exe", WallpaperResource.WallpaperSaveDirPath);
+            ProcessStartInfo processStartInfo = new ProcessStartInfo()
+            {
+                FileName = "explorer.exe",
+                Arguments = WallpaperResource.WallpaperSaveDirPath,
+                UseShellExecute = false
+            };
+            Process.Start(processStartInfo);
         }
 
         private void GiteeLinkClick(object sender, LinkLabelLinkClickedEventArgs e)

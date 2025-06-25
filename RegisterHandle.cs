@@ -1,7 +1,6 @@
 ﻿using Microsoft.Win32;
 using Microsoft.Win32.TaskScheduler;
 using System;
-using System.Windows.Forms;
 
 namespace WallpaperShuffle
 {
@@ -56,37 +55,37 @@ namespace WallpaperShuffle
         {
             using (TaskService ts = new TaskService())
             {
-                TaskDefinition td = ts.NewTask();
-                td.RegistrationInfo.Description = "开机自启动每日随机壁纸应用。";
+                //TaskDefinition td = ts.NewTask();
+                //td.RegistrationInfo.Description = "开机自启动每日随机壁纸应用。";
 
-                // 触发器：用户登录时
-                td.Triggers.Add(new LogonTrigger { UserId = Environment.UserName });
+                //// 触发器：用户登录时
+                //td.Triggers.Add(new LogonTrigger { UserId = Environment.UserName });
 
-                // 动作：启动当前应用程序
-                string appPath = Application.ExecutablePath;
-                td.Actions.Add(new ExecAction(appPath, "autoStart", null));
+                //// 动作：启动当前应用程序
+                //string appPath = Application.ExecutablePath;
+                //td.Actions.Add(new ExecAction(appPath, "autoStart", null));
 
-                // 设置任务以最高权限运行
-                td.Principal.RunLevel = TaskRunLevel.Highest;
+                //// 设置任务以最高权限运行
+                //td.Principal.RunLevel = TaskRunLevel.Highest;
 
-                // 设置兼容性
-                td.Settings.Compatibility = TaskCompatibility.V2_1;
+                //// 设置兼容性
+                //td.Settings.Compatibility = TaskCompatibility.V2_1;
 
-                // 注册任务
-                ts.RootFolder.RegisterTaskDefinition(TaskName, td);
+                //// 注册任务
+                //ts.RootFolder.RegisterTaskDefinition(TaskName, td);
             }
         }
 
         // 删除任务
         public void UnregisterTask()
         {
-            using (TaskService ts = new TaskService())
-            {
-                if (ts.RootFolder.Tasks.Exists(TaskName))
-                {
-                    ts.RootFolder.DeleteTask(TaskName);
-                }
-            }
+            //using (TaskService ts = new TaskService())
+            //{
+            //    if (ts.RootFolder.Tasks.Exists(TaskName))
+            //    {
+            //        ts.RootFolder.DeleteTask(TaskName);
+            //    }
+            //}
         }
     }
 }
