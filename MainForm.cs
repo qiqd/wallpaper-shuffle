@@ -55,7 +55,8 @@ namespace WallpaperShuffle
             ComboBox comboBox = sender as ComboBox;
             Properties.Settings.Default.currentIndex = comboBox.SelectedIndex;
             Properties.Settings.Default.Save();
-            //wallpaperResourcseManagement.updateWallpaperSources();
+            // 更新壁纸资源之后，立即删除旧壁纸
+            WallpaperResource.DeleteWallpaperWhenIndexChanged();
         }
 
         private void ChangeWallpaperSorcesFIle(object sender, EventArgs e)

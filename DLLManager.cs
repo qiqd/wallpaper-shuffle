@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace WallpaperShuffle
 {
@@ -8,6 +9,7 @@ namespace WallpaperShuffle
         // 定义 Windows API 常量和函数，修改注册表之后用来通知所有窗口
         private const int HWND_BROADCAST = 0xffff;
 
+        private const int SPI_GETDESKWALLPAPER = 0x0073;
         private const uint WM_SETTINGCHANGE = 0x001A;
         private const uint SMTO_NORMAL = 0x0002;
         private const uint TIMEOUT = 100;
@@ -22,6 +24,9 @@ namespace WallpaperShuffle
 
         [DllImport("user32.dll", SetLastError = true)]
         private static extern bool SystemParametersInfo(uint uiAction, uint uiParam, IntPtr pvParam, uint fWinIni);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern int SystemParametersInfo(int uAction, int uParam, StringBuilder lpvParam, int fuWinIni);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr SendMessageTimeout(
@@ -58,6 +63,13 @@ namespace WallpaperShuffle
                 SMTO_NORMAL,
                 TIMEOUT,
                 out result);
+        }
+
+        public static string GetCurrentWallpaperPath()
+        {
+            StringBuilder wallpaperPath = new StringBuilder(260); // MAX_PATH
+            SystemParametersInfo(SPI_GETDESKWALLPAPER, wallpaperPath.Capacity, wallpaperPath, 0);
+            return wallpaperPath.ToString();
         }
     }
 }

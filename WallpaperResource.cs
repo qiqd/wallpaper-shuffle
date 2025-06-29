@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 
 namespace WallpaperShuffle
@@ -137,6 +138,26 @@ namespace WallpaperShuffle
                 return "webp";
 
             return null;
+        }
+
+        public static void DeleteWallpaperWhenIndexChanged()
+        {
+            string wallpaperSaveDirPath = Properties.Settings.Default.WallpaperSaveDirPath;
+            string currentWallpaperPath = DLLManager.GetCurrentWallpaperPath();
+            string name = new FileInfo(currentWallpaperPath).Name;
+            string[] path = Directory.GetFiles(wallpaperSaveDirPath);
+            path.Where(item => !item.Contains(name)).ToList().ForEach(item =>
+             {
+                 try
+                 {
+                     File.Delete(item);
+                 }
+                 catch (Exception ex)
+                 {
+                     string logMessage = $"删除壁纸失败: {ex.Message}\n{ex.StackTrace}\n文件路径: {item}\n";
+                     File.AppendAllText(item, logMessage);
+                 }
+             });
         }
     }
 }
