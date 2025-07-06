@@ -142,5 +142,53 @@ namespace WallpaperShuffle.Properties {
                 this["Version"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("07/06/2025 08:00:00")]
+        public global::System.DateTime LightStart {
+            get {
+                return ((global::System.DateTime)(this["LightStart"]));
+            }
+            set {
+                this["LightStart"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("07/06/2025 20:00:00")]
+        public global::System.DateTime DarkStart {
+            get {
+                return ((global::System.DateTime)(this["DarkStart"]));
+            }
+            set {
+                this["DarkStart"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableAutoDarkMode {
+            get {
+                return ((bool)(this["EnableAutoDarkMode"]));
+            }
+            set {
+                this["EnableAutoDarkMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableWindowsTopMost {
+            get {
+                return ((bool)(this["EnableWindowsTopMost"]));
+            }
+            set {
+                this["EnableWindowsTopMost"] = value;
+            }
+        }
     }
 }

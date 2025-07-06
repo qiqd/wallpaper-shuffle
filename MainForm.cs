@@ -7,18 +7,17 @@ namespace WallpaperShuffle
 {
     public partial class MainForm : Form
     {
-        private readonly string CurrentInstancePath = AppDomain.CurrentDomain.BaseDirectory;
-        private readonly SlidehowManager slidehowManager;
-        private readonly RegisterHandle registerHandle;
         private readonly bool selfStaring;
+        private readonly string CurrentInstancePath = AppDomain.CurrentDomain.BaseDirectory;
+        private readonly WallpaperShuffleTask slidehowManager;
+        private readonly RegisterHandle registerHandle;
 
-        public MainForm(bool selfStaring)
+        public MainForm(bool selfStaring) : this()
         {
-            InitializeComponent();
             WallpaperResource.LoadWallpaperResources();
             this.selfStaring = selfStaring;
-            this.slidehowManager = new SlidehowManager();
-            this.registerHandle = new RegisterHandle();
+            this.slidehowManager = new WallpaperShuffleTask();
+
             this.WallpaperSaveDirTextBox.Text = WallpaperResource.WallpaperSaveDirPath;
             DLLManager.WindowRoundedCornersHandle(this.WallpaperShuffleContextMenuStrip.Handle);
         }

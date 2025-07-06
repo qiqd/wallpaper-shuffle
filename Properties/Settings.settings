@@ -32,5 +32,17 @@
     <Setting Name="Version" Type="System.String" Scope="User">
       <Value Profile="(Default)">版本 1.0.0</Value>
     </Setting>
+    <Setting Name="LightStart" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">07/06/2025 08:00:00</Value>
+    </Setting>
+    <Setting Name="DarkStart" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">07/06/2025 20:00:00</Value>
+    </Setting>
+    <Setting Name="EnableAutoDarkMode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="EnableWindowsTopMost" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -13,17 +13,6 @@ namespace WallpaperShuffle
         [STAThread]
         private static void Main(string[] args)
         {
-            //using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
-            //{
-            //    WindowsPrincipal principal = new WindowsPrincipal(identity);
-            //    if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
-            //    {
-            //        MessageBox.Show("该应用需要以管理员身份运行！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //        Environment.Exit(Environment.ExitCode);
-            //    }
-            //  ;
-            //}
-
             //判断多开
             Process[] processes = Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName);
             AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
@@ -38,7 +27,7 @@ namespace WallpaperShuffle
                 Environment.Exit(Environment.ExitCode);
             }
             //判断是否是自启动
-            bool selfStarting = args.Any(item => item.Contains("autoStart"));//判断是否有自动启动参数
+            bool selfStarting = args.Any(item => item.Contains("autoStart"));
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm(selfStarting));

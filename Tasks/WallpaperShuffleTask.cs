@@ -4,7 +4,7 @@ using System;
 
 namespace WallpaperShuffle
 {
-    public class SlidehowManager
+    public class WallpaperShuffleTask
     {
         private readonly int CleanupIntervalMinutes = Properties.Settings.Default.CleanupIntervalMinutes; // 默认清理间隔时间为30分钟
         private readonly int IntervalMinutes = Properties.Settings.Default.IntervalMinutes; // 默认间隔时间为5分钟
@@ -65,8 +65,7 @@ namespace WallpaperShuffle
                  .WithIntervalInSeconds(interval * 60 - 30)
                   .RepeatForever())
               .Build();
-           await this.scheduler.RescheduleJob(new TriggerKey(PreloadWallpaperTriggerName, WallpaperGroup), newPreloadTrigger);
-             
+            await this.scheduler.RescheduleJob(new TriggerKey(PreloadWallpaperTriggerName, WallpaperGroup), newPreloadTrigger);
         }
 
         public async void OnCleanupInternalChange(int interval)

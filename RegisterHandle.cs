@@ -5,33 +5,39 @@ using System.Windows.Forms;
 
 namespace WallpaperShuffle
 {
+    /// <summary>
+    /// 用来处理注册表相关操作的类，比如设置开机自启动、修改壁纸切换间隔等。
+    /// </summary>
     internal class RegisterHandle
     {
-        //private const uint SPI_SETDESKWALLPAPER = 0x0014;
-        //private const uint SPIF_UPDATEINIFILE = 0x01;
-        //private const uint SPIF_SENDCHANGE = 0x02;
+        public static MainForm mainForm { get; set; }
 
-        //// 定义 Windows API 常量和函数
-        //private const int HWND_BROADCAST = 0xffff;
-
-        //private const uint WM_SETTINGCHANGE = 0x001A;
-        //private const uint SMTO_NORMAL = 0x0002;
-        //private const uint TIMEOUT = 100;
+        // 任务名称
         private const string TaskName = "WallpaperShuffleAutoStart";
 
+        // 壁纸切换间隔的注册表路径
         private const string SliderInterval = @"Control Panel\Personalization\Desktop Slideshow";
+
         private const string AppName = "WallpaperShuffle";
+
+        //自启动注册表路径
+        private const string RunKeyPath = @"Software\Microsoft\Windows\CurrentVersion\Run";
+
+        //设置系统主题的注册表路径
+        private const string ThemePath = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
+
+        //应用程序主题的注册表键
+        private const string AppsUseLightThemeKey = "AppsUseLightTheme";
+
+        //系统主题的注册表键
+        private const string SystemUsesLightThemeKey = "SystemUsesLightTheme";
 
         // 获取当前可执行文件的路径
         private string appPath = $"\"{Application.ExecutablePath}\" /autoStart";
 
-        // 注册表项路径（当前用户）
-        private const string keyPath = @"Software\Microsoft\Windows\CurrentVersion\Run";
-
-        //[DllImport("user32.dll", SetLastError = true)]
-        //private static extern bool SystemParametersInfo(uint uiAction, uint uiParam, IntPtr pvParam, uint fWinIni);
-
-        // 加载壁纸切换间隔相关设置
+        /// <summary>
+        /// 加载壁纸切换间隔。
+        /// </summary>
         public void LoadInterval()
         {
             // 打开注册表项
@@ -46,12 +52,15 @@ namespace WallpaperShuffle
             }
         }
 
+        /// <summary>
+        /// 应用程序注册开机自启动。
+        /// </summary>
         public void RegisterAutoStart()
         {
             try
             {
                 // 打开注册表项（HKEY_CURRENT_USER）
-                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(keyPath, true))
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(RunKeyPath, true))
                 {
                     if (key == null)
                     {
@@ -71,12 +80,15 @@ namespace WallpaperShuffle
             }
         }
 
+        /// <summary>
+        /// 应用程序取消开机自启动。
+        /// </summary>
         public void UnregisterAutoStart()
         {
             try
             {
                 // 打开注册表项（HKEY_CURRENT_USER）
-                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(keyPath, true))
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(RunKeyPath, true))
                 {
                     if (key == null)
                     {
@@ -94,6 +106,10 @@ namespace WallpaperShuffle
             }
         }
 
+        /// <summary>
+        /// 改变壁纸切换间隔。
+        /// </summary>
+        /// <param name="newInterval">新的时间间隔</param>
         public void ChangeInterval(int newInterval)
         {
             // 打开注册表项
@@ -106,7 +122,9 @@ namespace WallpaperShuffle
             }
         }
 
-        // 注册开机自启动任务
+        /// <summary>
+        /// 通过 Windows 任务计划程序注册开机自启动任务。
+        /// </summary>
         public void RegisterTask()
         {
             using (TaskService ts = new TaskService())
@@ -132,7 +150,9 @@ namespace WallpaperShuffle
             }
         }
 
-        // 删除任务
+        /// <summary>
+        /// 通过 Windows 任务计划程序取消注册开机自启动任务。
+        /// </summary>
         public void UnregisterTask()
         {
             using (TaskService ts = new TaskService())
@@ -141,6 +161,38 @@ namespace WallpaperShuffle
                 {
                     ts.RootFolder.DeleteTask(TaskName);
                 }
+            }
+        }
+
+        /// <summary>
+        /// 改变系统主题模式（浅色或深色）。
+        /// </summary>
+        /// <param name="isLight">是否是浅色模式</param>
+        /// <param name="handle">对应的窗口句柄</param>
+        public static void ChangeModeToLight(bool isLight)
+        {
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(ThemePath, true))
+            {
+                if (key == null)
+                {
+                    MessageBox.Show("无法打开注册表项");
+                    return;
+                }
+                // 设置系统主题（如果支持）
+                if (key.GetValue(SystemUsesLightThemeKey) != null)
+                {
+                    key.SetValue(SystemUsesLightThemeKey, isLight ? 1 : 0, RegistryValueKind.DWord);
+                }
+
+                // 设置应用程序主题
+                key.SetValue(AppsUseLightThemeKey, isLight ? 1 : 0, RegistryValueKind.DWord);
+                // 异步刷新系统主题
+                mainForm.Invoke(new System.Action(() =>
+                {
+                    NotifySysChangeTheme.RefreshTheme();
+                    int transparency = isLight ? 0 : 1; // 窗口深浅色模式，·1·为深色模式，·0·为浅色模式
+                    NotifySysChangeTheme.DwmSetWindowAttribute(mainForm.Handle, 20, ref transparency, sizeof(int));
+                }));
             }
         }
     }
