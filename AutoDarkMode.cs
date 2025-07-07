@@ -4,18 +4,18 @@ using System.Windows.Forms;
 
 namespace WallpaperShuffle
 {
-    public partial class MainForm : Form
+    public partial class WallpaperShuffle : Form
     {
         private readonly AutoChangeDarkTask schedule;
         private WindowTopMost windowTopMost;
 
-        public MainForm()
+        public WallpaperShuffle()
         {
             InitializeComponent();
             RegisterHandle.mainForm = this;
             this.registerHandle = new RegisterHandle();
-            this.schedule = new AutoChangeDarkTask() { mainForm = this };
             AutoChangeDarkTask.mainFormHandle = this.Handle;
+            this.schedule = new AutoChangeDarkTask() { mainForm = this };
             InitializeTheme();
         }
 
@@ -30,7 +30,7 @@ namespace WallpaperShuffle
             this.EnableAutoDarkModeCheckBox.Checked = Properties.Settings.Default.EnableAutoDarkMode;
             this.EnableTopMostCheckBox.Checked = Properties.Settings.Default.EnableWindowsTopMost;
             DateTime now = DateTime.Now;
-            if (now.TimeOfDay >= AutoChangeDarkTask.lightStart.TimeOfDay && now.TimeOfDay < AutoChangeDarkTask.darkStart.TimeOfDay)
+            if (now.TimeOfDay >= schedule.lightStart.TimeOfDay && now.TimeOfDay < schedule.darkStart.TimeOfDay)
             {
                 RegisterHandle.ChangeModeToLight(true);
                 //ApplyLightTheme(this);
@@ -154,6 +154,7 @@ namespace WallpaperShuffle
         /// <param name="e"></param>
         private void NotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            if (!Properties.Settings.Default.EnableWindowsTopMost) return;
             if (this.windowTopMost == null)
             {
                 this.windowTopMost = new WindowTopMost();
@@ -182,6 +183,7 @@ namespace WallpaperShuffle
         private void EnableAutoDark_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox checkBox = sender as CheckBox;
+            schedule.AutoDarkTaskSwitch(checkBox.Checked);
             Properties.Settings.Default.EnableAutoDarkMode = checkBox.Checked;
             Properties.Settings.Default.Save();
         }

@@ -3,7 +3,7 @@
 namespace WallpaperShuffle
 {
     /// <summary>
-    /// 用来检查系统主题是否为暗黑模式的帮助类。
+    /// 用来检查系统主题是否为深色模式的帮助类。
     /// </summary>
     internal class SystemThemeHelper
     {

@@ -4,6 +4,9 @@ using System.Text;
 
 namespace WallpaperShuffle
 {
+    /// <summary>
+    /// 该类用来处理与 Windows API 相关的操作，比如修改窗口圆角、发送消息到所有窗口、获取当前壁纸路径等。
+    /// </summary>
     internal class DLLManager
     {
         // 定义 Windows API 常量和函数，修改注册表之后用来通知所有窗口
@@ -42,6 +45,10 @@ namespace WallpaperShuffle
         [DllImport("dwmapi.dll", CharSet = CharSet.Unicode)]
         public static extern void DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int value, int size);
 
+        /// <summary>
+        /// 修改窗口的圆角样式。
+        /// </summary>
+        /// <param name="handle"></param>
         public static void WindowRoundedCornersHandle(IntPtr handle)
         {
             const int DWMWA_WINDOW_CORNER_PREFERENCE = 33; // 属性ID
@@ -49,6 +56,10 @@ namespace WallpaperShuffle
             DwmSetWindowAttribute(handle, DWMWA_WINDOW_CORNER_PREFERENCE, ref cornerPreference, sizeof(int));
         }
 
+        /// <summary>
+        /// 当修改注册表后，发送消息到所有窗口以通知它们更新设置。
+        /// </summary>
+        /// <param name="section"></param>
         public static void SendMessageToAllWindows(string section)
         {
             IntPtr result;
@@ -65,6 +76,10 @@ namespace WallpaperShuffle
                 out result);
         }
 
+        /// <summary>
+        /// 获取当前桌面壁纸的路径。
+        /// </summary>
+        /// <returns></returns>
         public static string GetCurrentWallpaperPath()
         {
             StringBuilder wallpaperPath = new StringBuilder(260); // MAX_PATH

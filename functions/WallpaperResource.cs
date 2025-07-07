@@ -8,6 +8,9 @@ using System.Net.Http;
 
 namespace WallpaperShuffle
 {
+    /// <summary>
+    /// 该类用于管理壁纸资源，包括加载、下载和保存壁纸。
+    /// </summary>
     internal class WallpaperResource
     {
         public static string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "error.log");
@@ -30,6 +33,10 @@ namespace WallpaperShuffle
             }
         }
 
+        /// <summary>
+        /// 加载壁纸资源列表。
+        /// </summary>
+        /// <returns>获取到的壁纸资源</returns>
         public static WallpaperSourceItem LoadWallpaperResources()
         {
             string currentTitle = Properties.Settings.Default.ResourceTitle;
@@ -59,6 +66,10 @@ namespace WallpaperShuffle
             }
         }
 
+        /// <summary>
+        /// 异步下载并保存图片到指定目录。
+        /// </summary>
+        /// <param name="url">壁纸下载的url</param>
         public static async void DownloadAndSaveImageAsync(string url)
         {
             try
@@ -109,6 +120,11 @@ namespace WallpaperShuffle
             }
         }
 
+        /// <summary>
+        /// 获取图片文件扩展名。
+        /// </summary>
+        /// <param name="buffer">图片对应的byte数组</param>
+        /// <returns>图片拓展名</returns>
         private static string GetImageFileExtension(byte[] buffer)
         {
             // JPEG: starts with FF D8 FF
@@ -140,6 +156,9 @@ namespace WallpaperShuffle
             return null;
         }
 
+        /// <summary>
+        /// 当壁纸索引改变时，删除之前保存的壁纸文件。
+        /// </summary>
         public static void DeleteWallpaperWhenIndexChanged()
         {
             string wallpaperSaveDirPath = Properties.Settings.Default.WallpaperSaveDirPath;

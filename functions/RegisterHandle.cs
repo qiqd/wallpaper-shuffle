@@ -10,7 +10,7 @@ namespace WallpaperShuffle
     /// </summary>
     internal class RegisterHandle
     {
-        public static MainForm mainForm { get; set; }
+        public static WallpaperShuffle mainForm { get; set; }
 
         // 任务名称
         private const string TaskName = "WallpaperShuffleAutoStart";

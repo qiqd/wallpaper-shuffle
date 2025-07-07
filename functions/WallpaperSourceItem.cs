@@ -1,5 +1,8 @@
 ﻿namespace WallpaperShuffle
 {
+    /// <summary>
+    /// 用来表示壁纸源的项。
+    /// </summary>
     internal class WallpaperSourceItem
     {
         public string title { get; set; }

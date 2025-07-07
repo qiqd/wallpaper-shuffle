@@ -5,14 +5,15 @@ using System.Windows.Forms;
 
 namespace WallpaperShuffle
 {
-    public partial class MainForm : Form
+    public partial class WallpaperShuffle : Form
     {
         private readonly bool selfStaring;
+        private Random random = new Random();
         private readonly string CurrentInstancePath = AppDomain.CurrentDomain.BaseDirectory;
         private readonly WallpaperShuffleTask slidehowManager;
         private readonly RegisterHandle registerHandle;
 
-        public MainForm(bool selfStaring) : this()
+        public WallpaperShuffle(bool selfStaring) : this()
         {
             WallpaperResource.LoadWallpaperResources();
             this.selfStaring = selfStaring;
@@ -195,6 +196,15 @@ namespace WallpaperShuffle
 
         private void ShowMainFormStrip(object sender, EventArgs e)
         {
+            int index = random.Next(0, 3);
+            switch (index)
+            {
+                case 0: this.AboutPictureBox.Image = Properties.Resources.teto2; break;
+                case 1: this.AboutPictureBox.Image = Properties.Resources.miku; break;
+                case 2: this.AboutPictureBox.Image = Properties.Resources.teto1; break;
+                default: break;
+            }
+            this.AboutPictureBox.Refresh();
             this.Show();
             this.WindowState = FormWindowState.Normal;
             this.ShowInTaskbar = true;

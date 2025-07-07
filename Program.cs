@@ -30,7 +30,7 @@ namespace WallpaperShuffle
             bool selfStarting = args.Any(item => item.Contains("autoStart"));
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm(selfStarting));
+            Application.Run(new WallpaperShuffle(selfStarting));
         }
     }
 }

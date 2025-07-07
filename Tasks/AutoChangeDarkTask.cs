@@ -1,7 +1,7 @@
 ﻿using Quartz;
 using Quartz.Impl;
 using System;
-using System.IO;
+using System.Threading.Tasks;
 using WallpaperShuffle.job;
 
 namespace WallpaperShuffle
@@ -15,32 +15,51 @@ namespace WallpaperShuffle
         internal bool enablePin = Properties.Settings.Default.EnableWindowsTopMost;
 
         //默认的触发时间
-        internal static DateTime lightStart = Properties.Settings.Default.LightStart;
+        internal DateTime lightStart = Properties.Settings.Default.LightStart;
 
-        internal static DateTime darkStart = Properties.Settings.Default.DarkStart;
+        internal DateTime darkStart = Properties.Settings.Default.DarkStart;
 
         // 创建调度器
         internal IScheduler scheduler;
 
-        internal string userPath;
-        internal string appFolder;
-        internal MainForm mainForm { get; set; }
+        internal WallpaperShuffle mainForm { get; set; }
+
         internal static IntPtr mainFormHandle { get; set; }
 
         public AutoChangeDarkTask()
         {
-            //Environment.SpecialFolder.Programs
-            this.userPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            this.appFolder = Path.Combine(userPath, "AutoDarkMin");
-            //LoadSettings();
-            InitializeSchedule();
+            Task.Run(async () =>
+            {
+                this.scheduler = await StdSchedulerFactory.GetDefaultScheduler();
+                await scheduler.Start();
+                InitializeSchedule();
+            });
         }
 
+        /// <summary>
+        /// 允许外部调用来切换深色模式。
+        /// </summary>
+        /// <param name="turnoff"></param>
+        internal void AutoDarkTaskSwitch(bool turnoff)
+        {
+            if (scheduler == null) return;
+            if (turnoff == true)
+            {
+                scheduler.PauseAll();
+            }
+            else
+            {
+                scheduler.ResumeAll();
+            }
+        }
+
+        /// <summary>
+        /// 初始化调度任务。
+        /// </summary>
         internal async void InitializeSchedule()
         {
-            this.scheduler = await StdSchedulerFactory.GetDefaultScheduler();
-            await scheduler.Start();
-
+            this.lightStart = Properties.Settings.Default.LightStart;
+            this.darkStart = Properties.Settings.Default.DarkStart;
             // 创建深色模式作业
             IJobDetail darkJob = JobBuilder.Create<SwitchToDarkModeJob>()
                 .WithIdentity("JobToDark", "group1")
@@ -83,38 +102,5 @@ namespace WallpaperShuffle
                 await scheduler.RescheduleJob(new TriggerKey("lightTrigger", "group1"), lightTrigger);
             }
         }
-
-        //public void SaveSettings()
-        //{
-        //    UserInfo userInfo = new UserInfo() { start = lightStart, end = darkStart, enablePin = enablePin };
-        //    string v = JsonSerializer.Serialize(userInfo);
-
-        //    if (!Directory.Exists(appFolder))
-        //    {
-        //        Directory.CreateDirectory(appFolder);
-        //    }
-
-        //    File.WriteAllText(appFolder + "\\setting.json", v);
-        //}
-
-        //public void LoadSettings()
-        //{
-        //    try
-        //    {
-        //        UserInfo? userInfo = JsonSerializer.Deserialize<UserInfo>(File.ReadAllText(appFolder + "\\setting.json"));
-        //        lightStart = userInfo!.start ?? new TimeSpan(6, 0, 0);
-        //        darkStart = userInfo.end ?? new TimeSpan(20, 0, 0);
-        //        enablePin = userInfo.enablePin;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.Message);
-        //        //MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        if (File.Exists(appFolder + "\\setting.json"))
-        //        {
-        //            File.Delete("setting.json");
-        //        }
-        //    }
-        //}
     }
 }

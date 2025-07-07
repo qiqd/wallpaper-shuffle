@@ -1,6 +1,6 @@
 ﻿namespace WallpaperShuffle
 {
-    partial class MainForm
+    partial class WallpaperShuffle
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WallpaperShuffle));
             this.TabControl = new System.Windows.Forms.TabControl();
             this.WallpaperShuffleTabPage = new System.Windows.Forms.TabPage();
             this.UsageGuideBtn = new System.Windows.Forms.Button();
@@ -53,11 +53,11 @@
             this.DarkAndLightModeTabPage = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.EnableTopMostCheckBox = new System.Windows.Forms.CheckBox();
+            this.EnableAutoDarkModeCheckBox = new System.Windows.Forms.CheckBox();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.ForceDarkRadioBtn = new System.Windows.Forms.RadioButton();
             this.ForceLightRadioBtn = new System.Windows.Forms.RadioButton();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.EnableAutoDarkModeCheckBox = new System.Windows.Forms.CheckBox();
-            this.EnableTopMostCheckBox = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.LightStartTimePicker = new System.Windows.Forms.DateTimePicker();
             this.DarkStartTimePicker = new System.Windows.Forms.DateTimePicker();
@@ -65,7 +65,7 @@
             this.LightModeStartTimeLable = new System.Windows.Forms.Label();
             this.About = new System.Windows.Forms.TabPage();
             this.AboutRightPanel = new System.Windows.Forms.Panel();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.AboutPictureBox = new System.Windows.Forms.PictureBox();
             this.AboutLeftPanel = new System.Windows.Forms.Panel();
             this.GitHubLinkLabel = new System.Windows.Forms.LinkLabel();
             this.GiteeLlinkLable = new System.Windows.Forms.LinkLabel();
@@ -78,6 +78,7 @@
             this.WallPaperShuffleNotify = new System.Windows.Forms.NotifyIcon(this.components);
             this.WallpaperShuffleContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ShowMainFormItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CancelAllTopMostWindows = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TabControl.SuspendLayout();
             this.WallpaperShuffleTabPage.SuspendLayout();
@@ -90,7 +91,7 @@
             this.panel1.SuspendLayout();
             this.About.SuspendLayout();
             this.AboutRightPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AboutPictureBox)).BeginInit();
             this.AboutLeftPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).BeginInit();
@@ -374,18 +375,51 @@
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.ForceDarkRadioBtn);
-            this.panel4.Controls.Add(this.ForceLightRadioBtn);
+            this.panel4.Controls.Add(this.EnableTopMostCheckBox);
+            this.panel4.Controls.Add(this.EnableAutoDarkModeCheckBox);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(263, 0);
+            this.panel4.Location = new System.Drawing.Point(175, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(168, 150);
+            this.panel4.Size = new System.Drawing.Size(256, 150);
             this.panel4.TabIndex = 4;
+            // 
+            // EnableTopMostCheckBox
+            // 
+            this.EnableTopMostCheckBox.AutoSize = true;
+            this.EnableTopMostCheckBox.Location = new System.Drawing.Point(15, 7);
+            this.EnableTopMostCheckBox.Name = "EnableTopMostCheckBox";
+            this.EnableTopMostCheckBox.Size = new System.Drawing.Size(149, 19);
+            this.EnableTopMostCheckBox.TabIndex = 2;
+            this.EnableTopMostCheckBox.Text = "启用窗口置顶功能";
+            this.QuestionToolTip.SetToolTip(this.EnableTopMostCheckBox, "启用该选项允许双击状态栏图标后设置需要置顶的窗口。");
+            this.EnableTopMostCheckBox.UseVisualStyleBackColor = true;
+            this.EnableTopMostCheckBox.CheckedChanged += new System.EventHandler(this.EnableWindowTopMost_CheckedChanged);
+            // 
+            // EnableAutoDarkModeCheckBox
+            // 
+            this.EnableAutoDarkModeCheckBox.AutoSize = true;
+            this.EnableAutoDarkModeCheckBox.Location = new System.Drawing.Point(15, 46);
+            this.EnableAutoDarkModeCheckBox.Name = "EnableAutoDarkModeCheckBox";
+            this.EnableAutoDarkModeCheckBox.Size = new System.Drawing.Size(194, 19);
+            this.EnableAutoDarkModeCheckBox.TabIndex = 2;
+            this.EnableAutoDarkModeCheckBox.Text = "启用深浅色主题切换功能";
+            this.EnableAutoDarkModeCheckBox.UseVisualStyleBackColor = true;
+            this.EnableAutoDarkModeCheckBox.CheckedChanged += new System.EventHandler(this.EnableAutoDark_CheckedChanged);
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.ForceDarkRadioBtn);
+            this.panel3.Controls.Add(this.ForceLightRadioBtn);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(175, 150);
+            this.panel3.TabIndex = 3;
             // 
             // ForceDarkRadioBtn
             // 
             this.ForceDarkRadioBtn.AutoSize = true;
-            this.ForceDarkRadioBtn.Location = new System.Drawing.Point(9, 45);
+            this.ForceDarkRadioBtn.Location = new System.Drawing.Point(17, 45);
             this.ForceDarkRadioBtn.Name = "ForceDarkRadioBtn";
             this.ForceDarkRadioBtn.Size = new System.Drawing.Size(118, 19);
             this.ForceDarkRadioBtn.TabIndex = 0;
@@ -398,7 +432,7 @@
             // ForceLightRadioBtn
             // 
             this.ForceLightRadioBtn.AutoSize = true;
-            this.ForceLightRadioBtn.Location = new System.Drawing.Point(9, 6);
+            this.ForceLightRadioBtn.Location = new System.Drawing.Point(17, 6);
             this.ForceLightRadioBtn.Name = "ForceLightRadioBtn";
             this.ForceLightRadioBtn.Size = new System.Drawing.Size(118, 19);
             this.ForceLightRadioBtn.TabIndex = 0;
@@ -407,39 +441,6 @@
             this.ForceLightRadioBtn.Text = "强制浅色主题";
             this.ForceLightRadioBtn.UseVisualStyleBackColor = true;
             this.ForceLightRadioBtn.CheckedChanged += new System.EventHandler(this.ForceChangingMode);
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.EnableAutoDarkModeCheckBox);
-            this.panel3.Controls.Add(this.EnableTopMostCheckBox);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(263, 150);
-            this.panel3.TabIndex = 3;
-            // 
-            // EnableAutoDarkModeCheckBox
-            // 
-            this.EnableAutoDarkModeCheckBox.AutoSize = true;
-            this.EnableAutoDarkModeCheckBox.Location = new System.Drawing.Point(44, 45);
-            this.EnableAutoDarkModeCheckBox.Name = "EnableAutoDarkModeCheckBox";
-            this.EnableAutoDarkModeCheckBox.Size = new System.Drawing.Size(194, 19);
-            this.EnableAutoDarkModeCheckBox.TabIndex = 2;
-            this.EnableAutoDarkModeCheckBox.Text = "启用深浅色主题切换功能";
-            this.EnableAutoDarkModeCheckBox.UseVisualStyleBackColor = true;
-            this.EnableAutoDarkModeCheckBox.CheckedChanged += new System.EventHandler(this.EnableAutoDark_CheckedChanged);
-            // 
-            // EnableTopMostCheckBox
-            // 
-            this.EnableTopMostCheckBox.AutoSize = true;
-            this.EnableTopMostCheckBox.Location = new System.Drawing.Point(44, 6);
-            this.EnableTopMostCheckBox.Name = "EnableTopMostCheckBox";
-            this.EnableTopMostCheckBox.Size = new System.Drawing.Size(149, 19);
-            this.EnableTopMostCheckBox.TabIndex = 2;
-            this.EnableTopMostCheckBox.Text = "启用窗口置顶功能";
-            this.QuestionToolTip.SetToolTip(this.EnableTopMostCheckBox, "启用该选项允许双击状态栏图标后设置需要置顶的窗口。");
-            this.EnableTopMostCheckBox.UseVisualStyleBackColor = true;
-            this.EnableTopMostCheckBox.CheckedChanged += new System.EventHandler(this.EnableWindowTopMost_CheckedChanged);
             // 
             // panel1
             // 
@@ -462,10 +463,10 @@
             this.LightStartTimePicker.CustomFormat = "HH:mm";
             this.LightStartTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::WallpaperShuffle.Properties.Settings.Default, "LightStart", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.LightStartTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.LightStartTimePicker.Location = new System.Drawing.Point(190, 10);
+            this.LightStartTimePicker.Location = new System.Drawing.Point(117, 6);
             this.LightStartTimePicker.Name = "LightStartTimePicker";
             this.LightStartTimePicker.ShowUpDown = true;
-            this.LightStartTimePicker.Size = new System.Drawing.Size(200, 25);
+            this.LightStartTimePicker.Size = new System.Drawing.Size(273, 25);
             this.LightStartTimePicker.TabIndex = 1;
             this.LightStartTimePicker.Value = global::WallpaperShuffle.Properties.Settings.Default.LightStart;
             this.LightStartTimePicker.ValueChanged += new System.EventHandler(this.LightStart_ValueChanged);
@@ -475,10 +476,10 @@
             this.DarkStartTimePicker.CustomFormat = "HH:mm";
             this.DarkStartTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::WallpaperShuffle.Properties.Settings.Default, "DarkStart", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.DarkStartTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.DarkStartTimePicker.Location = new System.Drawing.Point(190, 45);
+            this.DarkStartTimePicker.Location = new System.Drawing.Point(117, 41);
             this.DarkStartTimePicker.Name = "DarkStartTimePicker";
             this.DarkStartTimePicker.ShowUpDown = true;
-            this.DarkStartTimePicker.Size = new System.Drawing.Size(200, 25);
+            this.DarkStartTimePicker.Size = new System.Drawing.Size(273, 25);
             this.DarkStartTimePicker.TabIndex = 1;
             this.DarkStartTimePicker.Value = global::WallpaperShuffle.Properties.Settings.Default.DarkStart;
             this.DarkStartTimePicker.ValueChanged += new System.EventHandler(this.DarkStart_ValueChanged);
@@ -486,7 +487,7 @@
             // DarkModeEndLable
             // 
             this.DarkModeEndLable.AutoSize = true;
-            this.DarkModeEndLable.Location = new System.Drawing.Point(41, 50);
+            this.DarkModeEndLable.Location = new System.Drawing.Point(14, 45);
             this.DarkModeEndLable.Name = "DarkModeEndLable";
             this.DarkModeEndLable.Size = new System.Drawing.Size(97, 15);
             this.DarkModeEndLable.TabIndex = 0;
@@ -495,7 +496,7 @@
             // LightModeStartTimeLable
             // 
             this.LightModeStartTimeLable.AutoSize = true;
-            this.LightModeStartTimeLable.Location = new System.Drawing.Point(41, 15);
+            this.LightModeStartTimeLable.Location = new System.Drawing.Point(14, 10);
             this.LightModeStartTimeLable.Name = "LightModeStartTimeLable";
             this.LightModeStartTimeLable.Size = new System.Drawing.Size(97, 15);
             this.LightModeStartTimeLable.TabIndex = 0;
@@ -515,23 +516,23 @@
             // 
             // AboutRightPanel
             // 
-            this.AboutRightPanel.Controls.Add(this.pictureBox2);
+            this.AboutRightPanel.Controls.Add(this.AboutPictureBox);
             this.AboutRightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.AboutRightPanel.Location = new System.Drawing.Point(216, 0);
             this.AboutRightPanel.Name = "AboutRightPanel";
             this.AboutRightPanel.Size = new System.Drawing.Size(221, 236);
             this.AboutRightPanel.TabIndex = 3;
             // 
-            // pictureBox2
+            // AboutPictureBox
             // 
-            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(221, 236);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 0;
-            this.pictureBox2.TabStop = false;
+            this.AboutPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AboutPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("AboutPictureBox.Image")));
+            this.AboutPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.AboutPictureBox.Name = "AboutPictureBox";
+            this.AboutPictureBox.Size = new System.Drawing.Size(221, 236);
+            this.AboutPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.AboutPictureBox.TabIndex = 0;
+            this.AboutPictureBox.TabStop = false;
             // 
             // AboutLeftPanel
             // 
@@ -603,9 +604,9 @@
             // 
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(17, 28);
+            this.pictureBox1.Location = new System.Drawing.Point(9, 18);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(55, 52);
+            this.pictureBox1.Size = new System.Drawing.Size(64, 72);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
@@ -641,31 +642,41 @@
             this.WallPaperShuffleNotify.Icon = ((System.Drawing.Icon)(resources.GetObject("WallPaperShuffleNotify.Icon")));
             this.WallPaperShuffleNotify.Text = "每日随机壁纸";
             this.WallPaperShuffleNotify.Visible = true;
+            this.WallPaperShuffleNotify.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseDoubleClick);
+            this.WallPaperShuffleNotify.MouseMove += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseMove);
             // 
             // WallpaperShuffleContextMenuStrip
             // 
             this.WallpaperShuffleContextMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.WallpaperShuffleContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ShowMainFormItem,
+            this.CancelAllTopMostWindows,
             this.ExitItem});
             this.WallpaperShuffleContextMenuStrip.Name = "WallpaperShuffleContextMenuStrip";
-            this.WallpaperShuffleContextMenuStrip.Size = new System.Drawing.Size(139, 52);
+            this.WallpaperShuffleContextMenuStrip.Size = new System.Drawing.Size(199, 76);
             // 
             // ShowMainFormItem
             // 
             this.ShowMainFormItem.Name = "ShowMainFormItem";
-            this.ShowMainFormItem.Size = new System.Drawing.Size(138, 24);
+            this.ShowMainFormItem.Size = new System.Drawing.Size(198, 24);
             this.ShowMainFormItem.Text = "主页面";
             this.ShowMainFormItem.Click += new System.EventHandler(this.ShowMainFormStrip);
+            // 
+            // CancelAllTopMostWindows
+            // 
+            this.CancelAllTopMostWindows.Name = "CancelAllTopMostWindows";
+            this.CancelAllTopMostWindows.Size = new System.Drawing.Size(198, 24);
+            this.CancelAllTopMostWindows.Text = "取消所有置顶窗口";
+            this.CancelAllTopMostWindows.Click += new System.EventHandler(this.CancelAllTopMenuItem_Click);
             // 
             // ExitItem
             // 
             this.ExitItem.Name = "ExitItem";
-            this.ExitItem.Size = new System.Drawing.Size(138, 24);
+            this.ExitItem.Size = new System.Drawing.Size(198, 24);
             this.ExitItem.Text = "退出程序";
             this.ExitItem.Click += new System.EventHandler(this.QuitAppStrip);
             // 
-            // MainForm
+            // WallpaperShuffle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -677,7 +688,7 @@
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "MainForm";
+            this.Name = "WallpaperShuffle";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "每日随机壁纸";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
@@ -697,7 +708,7 @@
             this.panel1.PerformLayout();
             this.About.ResumeLayout(false);
             this.AboutRightPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AboutPictureBox)).EndInit();
             this.AboutLeftPanel.ResumeLayout(false);
             this.AboutLeftPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -743,7 +754,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.LinkLabel GitHubLinkLabel;
         private System.Windows.Forms.LinkLabel GiteeLlinkLable;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox AboutPictureBox;
         private System.Windows.Forms.TabPage DarkAndLightModeTabPage;
         private System.Windows.Forms.DateTimePicker LightStartTimePicker;
         private System.Windows.Forms.Label LightModeStartTimeLable;
@@ -757,6 +768,7 @@
         private System.Windows.Forms.CheckBox EnableTopMostCheckBox;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.CheckBox EnableAutoDarkModeCheckBox;
+        private System.Windows.Forms.ToolStripMenuItem CancelAllTopMostWindows;
     }
 }
 

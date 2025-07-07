@@ -3,6 +3,9 @@ using System.Runtime.InteropServices;
 
 namespace WallpaperShuffle
 {
+    /// <summary>
+    /// 该类用来处理系统主题变更的通知。
+    /// </summary>
     public static class NotifySysChangeTheme
     {
         [DllImport("dwmapi.dll", CharSet = CharSet.Unicode)]
@@ -19,6 +22,9 @@ namespace WallpaperShuffle
             uint uTimeout,
             out IntPtr lpdwResult);
 
+        /// <summary>
+        /// 通知系统刷新主题。
+        /// </summary>
         public static void RefreshTheme()
         {
             const uint WM_SETTINGCHANGE = 0x001A;
@@ -35,23 +41,4 @@ namespace WallpaperShuffle
                 out result);
         }
     }
-
-    //暴力刷新系统主题
-    //public static class ExplorerRestart
-    //{
-    //    public static void RestartExplorer()
-    //    {
-    //        ProcessStartInfo startInfo = new ProcessStartInfo("explorer.exe")
-    //        {
-    //            Verb = "runas"
-    //        };
-    //        Process.Start(startInfo);
-
-    //        Process[] explorerProcesses = Process.GetProcessesByName("explorer");
-    //        foreach (Process process in explorerProcesses)
-    //        {
-    //            process.Kill();
-    //        }
-    //    }
-    //}
 }
